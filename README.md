@@ -7,10 +7,12 @@ you — code, changes, notes — and GroundTruth tells you, in words anyone can
 understand, what risks are hiding in it before it goes live. Then approve with
 one click and get a tamper-proof receipt proving a human said yes.
 
-For developers: it parses unified diffs, scores blast radius across schema /
-auth / secrets / dependencies / infrastructure, and signs approvals into an
-HMAC hash-chained ledger — a compliance artifact for EU AI Act Article 14
-(human oversight), SOC 2, and SOX.
+For developers: it parses unified diffs or any pasted text (ChatGPT/Claude output,
+coding agents like OpenCode/Claude Code/Cline/Cursor/Codex), scores blast radius
+across schema / auth / secrets / dependencies / infrastructure, maps damage
+across five sectors (security, trust, usage, accessibility, dependability), and
+signs approvals into an HMAC hash-chained ledger — a compliance artifact for
+EU AI Act Article 14 (human oversight), SOC 2, and SOX.
 
 ## Quickstart
 
