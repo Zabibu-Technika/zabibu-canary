@@ -7,7 +7,9 @@ changes, notes — and Zabibu Canary tells you, in words anyone can understand, 
 hiding in it before it goes live. Then approve with one click and get a tamper-proof receipt
 proving a human said yes.
 
-**A Zabibu Technika product · built by Tehillah Kachila.**
+**A [Zabibu Technika](https://zabibu.vercel.app) product · built by Tehillah Kachila.**
+
+**Live:** https://zabibucanary.vercel.app · **Docs:** https://zabibucanary.vercel.app/docs
 
 - Web app: paste a diff, read the report, sign the receipt
 - CLI (`zabibu`): the same engine, locally, with a pre-push gate — a local-first
@@ -50,7 +52,7 @@ zabibucanary demo                   # the bundled example review
 ### How the local approval loop works
 
 Each review is identified by a hash of the exact diff. Approving in the TUI (`a`) records an
-HMAC-signed approval in `~/.zabibu-canary/ledger.jsonl` — the same hash-chain construction as
+HMAC-signed approval in `~/.zabibucanary/ledger.jsonl` — the same hash-chain construction as
 the web app. Re-running the same diff (including from the installed git hook) sees the existing
 receipt and passes. Escape hatch: `CANARY_ACK=1` overrides the gate.
 
@@ -94,6 +96,10 @@ supabase/          production schema (RLS enabled)
 
 ## Deploy
 
-Production target: **Vercel** (auto-deploys on push to `main`).
-Repo: **github.com/Zabibu-Technika/zabibu-canary** (private).
+Production target: **Vercel** (Git integration on `main`; `npx vercel --prod` as a fallback).
+Repo: **github.com/Zabibu-Technika/zabibu-canary** (public).
 Set `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` in Vercel env for persistent storage.
+
+## License
+
+MIT © Zabibu Technika (Tehillah Kachila) — see [LICENSE](LICENSE).

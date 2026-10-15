@@ -1704,6 +1704,10 @@ pre {
 }
 
 /* FAQ */
+.faq-list {
+  border-top: 1px solid var(--border);
+}
+
 .faq {
   border-bottom: 1px solid var(--border);
 }

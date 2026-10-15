@@ -24,7 +24,11 @@ export default function DocsLayout({ children }: { children: ReactNode }) {
         <article className="docs-content">{children}</article>
       </div>
       <p className="credit">
-        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila
+        <strong>zabibu canary</strong> — a{" "}
+        <a href="https://zabibu.vercel.app" target="_blank" rel="noreferrer">
+          Zabibu Technika
+        </a>{" "}
+        product · built by Tehillah Kachila
       </p>
     </main>
   );

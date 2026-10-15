@@ -7,6 +7,7 @@ import { TerminalDemo } from "@/components/TerminalDemo";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { CliHelp } from "@/components/CliHelp";
 import { Comparison } from "@/components/Comparison";
+import { FaqList } from "@/components/Faq";
 import { CanaryLogo } from "@/components/CanaryLogo";
 import { Topbar } from "@/components/Topbar";
 import { ArrowUpRight } from "lucide-react";
@@ -20,7 +21,7 @@ export default async function DashboardPage() {
       {/* ── Topbar ──────────────────────────────────────────────────────── */}
       <Topbar />
 
-      {/* ── Hero: the whole site is one terminal session ─────────────────── */}
+      {/* ── 1 · The pitch: the whole site is one terminal session ────────── */}
       <section className="term-window">
         <div className="term-titlebar">
           <span className="term-dots" aria-hidden="true">
@@ -49,35 +50,13 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* ── Install ─────────────────────────────────────────────────────── */}
-      <section className="card" id="install">
-        <h2>Install the CLI</h2>
-        <p className="lede">
-          The same engine, terminal-native. It watches your staged changes, gates every push, and
-          never sends a byte of your code anywhere. This is the local alternative to CodeRabbit.
-        </p>
-        <InstallTabs />
-      </section>
-
-      {/* ── Why it hits different ───────────────────────────────────────── */}
+      {/* ── 2 · Why it's different ──────────────────────────────────────── */}
       <section>
         <h2>Why it hits different</h2>
         <FeatureGrid />
       </section>
 
-      {/* ── The CLI, documented ─────────────────────────────────────────── */}
-      <section>
-        <h2>The whole CLI, one screen</h2>
-        <CliHelp />
-      </section>
-
-      {/* ── Comparison ──────────────────────────────────────────────────── */}
-      <section>
-        <h2>How it compares</h2>
-        <Comparison />
-      </section>
-
-      {/* ── How it works ────────────────────────────────────────────────── */}
+      {/* ── 3 · How it works ────────────────────────────────────────────── */}
       <section className="card">
         <h2>How it works</h2>
         <ol className="steps">
@@ -111,7 +90,19 @@ export default async function DashboardPage() {
         </ol>
       </section>
 
-      {/* ── In-browser check ────────────────────────────────────────────── */}
+      {/* ── 4 · How it compares ─────────────────────────────────────────── */}
+      <section>
+        <h2>How it compares</h2>
+        <Comparison />
+      </section>
+
+      {/* ── 5 · The CLI, documented ─────────────────────────────────────── */}
+      <section>
+        <h2>The whole CLI, one screen</h2>
+        <CliHelp />
+      </section>
+
+      {/* ── 6 · Try it right here ───────────────────────────────────────── */}
       <section className="card">
         <h2>Check a change — in the browser</h2>
         <NewAnalysisForm />
@@ -121,10 +112,31 @@ export default async function DashboardPage() {
         </p>
       </section>
 
-      {/* ── Recent checks ───────────────────────────────────────────────── */}
+      {/* ── 7 · Recent checks ───────────────────────────────────────────── */}
       <section>
         <h2>Your recent checks</h2>
         <AnalysisTable analyses={analyses} />
+      </section>
+
+      {/* ── 8 · Questions ───────────────────────────────────────────────── */}
+      <section>
+        <h2>The questions you&apos;re about to ask</h2>
+        <p className="helper" style={{ marginBottom: 8 }}>
+          Honest answers before you trust a tool with your code —{" "}
+          <Link href="/docs/faq">all of them in the docs</Link>.
+        </p>
+        <FaqList />
+      </section>
+
+      {/* ── 9 · Install — the closing call to action ────────────────────── */}
+      <section className="card" id="install">
+        <h2>Install the CLI</h2>
+        <p className="lede">
+          One command. The same engine, terminal-native — it watches your staged changes, gates
+          every push, and never sends a byte of your code anywhere. This is the local alternative to
+          CodeRabbit.
+        </p>
+        <InstallTabs />
       </section>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
@@ -140,12 +152,19 @@ export default async function DashboardPage() {
           <a href="https://github.com/Zabibu-Technika/zabibu-canary" target="_blank" rel="noreferrer">
             GitHub <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
           </a>
+          <a href="https://zabibu.vercel.app" target="_blank" rel="noreferrer">
+            zabibu technika <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
+          </a>
           <a href="/install">install script</a>
           <a href="#install">install the CLI</a>
           <Link href="/docs">docs</Link>
         </nav>
         <p className="credit">
-          a Zabibu Technika product · built by Tehillah Kachila · MIT licensed
+          a{" "}
+          <a href="https://zabibu.vercel.app" target="_blank" rel="noreferrer">
+            Zabibu Technika
+          </a>{" "}
+          product · built by Tehillah Kachila · MIT licensed
         </p>
       </footer>
     </main>

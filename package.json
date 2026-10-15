@@ -2,6 +2,7 @@
   "name": "zabibu-canary-web",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "description": "Zabibu Canary — the safety check for AI-made changes. A Zabibu Technika product, built by Tehillah Kachila.",
   "workspaces": [
     "packages/*",
