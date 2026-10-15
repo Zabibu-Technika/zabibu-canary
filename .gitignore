@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env & secrets — never commit
+.env
+.env.*
+!.env.example
+
+# local database & logs
+data/
+.logs/
+*.log
+
+# misc
+.DS_Store
+Thumbs.db
