@@ -3,7 +3,11 @@ import { NewAnalysisForm } from "@/components/NewAnalysisForm";
 import { AnalysisTable } from "@/components/AnalysisTable";
 import { InstallTabs } from "@/components/InstallTabs";
 import { TerminalDemo } from "@/components/TerminalDemo";
-import { ShieldCheck } from "lucide-react";
+import { FeatureGrid } from "@/components/FeatureGrid";
+import { CliHelp } from "@/components/CliHelp";
+import { Comparison } from "@/components/Comparison";
+import { CanaryLogo } from "@/components/CanaryLogo";
+import { ArrowUpRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +15,16 @@ export default async function DashboardPage() {
   const analyses = await getStore().listAnalyses(25);
   return (
     <main className="app-shell">
-      {/* The whole site is one terminal session */}
+      {/* ── Topbar ──────────────────────────────────────────────────────── */}
+      <header className="topbar">
+        <span className="brand">
+          <CanaryLogo size={26} />
+          zabibu canary
+        </span>
+        <span className="tagline">the safety check for AI-made changes</span>
+      </header>
+
+      {/* ── Hero: the whole site is one terminal session ─────────────────── */}
       <section className="term-window">
         <div className="term-titlebar">
           <span className="term-dots" aria-hidden="true">
@@ -40,6 +53,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
+      {/* ── Install ─────────────────────────────────────────────────────── */}
       <section className="card" id="install">
         <h2>Install the CLI</h2>
         <p className="lede">
@@ -49,6 +63,25 @@ export default async function DashboardPage() {
         <InstallTabs />
       </section>
 
+      {/* ── Why it hits different ───────────────────────────────────────── */}
+      <section>
+        <h2>Why it hits different</h2>
+        <FeatureGrid />
+      </section>
+
+      {/* ── The CLI, documented ─────────────────────────────────────────── */}
+      <section>
+        <h2>The whole CLI, one screen</h2>
+        <CliHelp />
+      </section>
+
+      {/* ── Comparison ──────────────────────────────────────────────────── */}
+      <section>
+        <h2>How it compares</h2>
+        <Comparison />
+      </section>
+
+      {/* ── How it works ────────────────────────────────────────────────── */}
       <section className="card">
         <h2>How it works</h2>
         <ol className="steps">
@@ -82,6 +115,7 @@ export default async function DashboardPage() {
         </ol>
       </section>
 
+      {/* ── In-browser check ────────────────────────────────────────────── */}
       <section className="card">
         <h2>Check a change — in the browser</h2>
         <NewAnalysisForm />
@@ -91,15 +125,33 @@ export default async function DashboardPage() {
         </p>
       </section>
 
+      {/* ── Recent checks ───────────────────────────────────────────────── */}
       <section>
         <h2>Your recent checks</h2>
         <AnalysisTable analyses={analyses} />
       </section>
 
-      <p className="credit">
-        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila ·{" "}
-        <span className="term-green">MIT licensed</span>
-      </p>
+      {/* ── Footer ──────────────────────────────────────────────────────── */}
+      <footer className="site-footer">
+        <div className="footer-brand">
+          <CanaryLogo size={30} />
+          <div>
+            <strong>zabibu canary</strong>
+            <span className="helper">the safety check for AI-made changes</span>
+          </div>
+        </div>
+        <nav className="footer-links" aria-label="Footer">
+          <a href="https://github.com/Zabibu-Technika/zabibu-canary" target="_blank" rel="noreferrer">
+            GitHub <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
+          </a>
+          <a href="/install">install script</a>
+          <a href="#install">install the CLI</a>
+          <a href="https://github.com/Zabibu-Technika/zabibu-canary#readme">docs</a>
+        </nav>
+        <p className="credit">
+          a Zabibu Technika product · built by Tehillah Kachila · MIT licensed
+        </p>
+      </footer>
     </main>
   );
 }

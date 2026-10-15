@@ -9,6 +9,7 @@ import { ApprovePanel } from "@/components/ApprovePanel";
 import { ImpactRadar } from "@/components/ImpactRadar";
 import { ImpactBars } from "@/components/ImpactBars";
 import { ImpactGrid } from "@/components/ImpactGrid";
+import { CanaryLogo } from "@/components/CanaryLogo";
 
 export const dynamic = "force-dynamic";
 
@@ -136,7 +137,10 @@ export default async function AnalysisPage({
           <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
           All checks
         </Link>
-        <span className="tagline">zabibu canary</span>
+        <span className="brand">
+          <CanaryLogo size={20} />
+          zabibu canary
+        </span>
       </header>
 
       <section className="card detail-head">
