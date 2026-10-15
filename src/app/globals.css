@@ -2,15 +2,17 @@
    Design language: Apple HIG-adjacent — squircles, spring physics, tabular metrics. */
 
 :root {
-  /* Zabibu Canary — terminal theme */
-  --bg: #0a0e14;
-  --surface: #0f141c;
-  --surface-2: #121822;
-  --text: #c9d1d9;
-  --text-2: #7d8590;
-  --border: #1c2330;
-  --accent: #3fb950;
-  --accent-press: #2ea043;
+  /* Zabibu Canary — AMOLED terminal theme: true black + canary amber.
+     Amber is the BRAND accent (links, chrome, caret, focus).
+     Green/yellow/red stay SEMANTIC (safe · caution · danger) — never brand. */
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --surface-2: #141414;
+  --text: #ededed;
+  --text-2: #8b8b8b;
+  --border: #232323;
+  --accent: #f5b73f;
+  --accent-press: #d99a2b;
   --ok: #3fb950;
   --warn: #d29922;
   --danger: #f85149;
@@ -41,7 +43,7 @@ body {
 }
 
 ::selection {
-  background: rgba(63, 185, 80, 0.25);
+  background: rgba(245, 183, 63, 0.25);
 }
 
 a {
@@ -179,7 +181,7 @@ h3 {
 
 .btn:hover:not(:disabled) {
   background: var(--surface-2);
-  border-color: #b9b9bf;
+  border-color: rgba(245, 183, 63, 0.35);
 }
 
 .btn:active:not(:disabled) {
@@ -194,7 +196,7 @@ h3 {
 .btn-primary {
   background: var(--accent);
   border-color: transparent;
-  color: #06120a;
+  color: #000000;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -525,7 +527,7 @@ pre {
   height: 28px;
   border-radius: 999px;
   background: var(--accent);
-  color: #06120a;
+  color: #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -599,7 +601,7 @@ pre {
 
 .chip:hover {
   transform: scale(1.04);
-  border-color: #b9b9bf;
+  border-color: rgba(245, 183, 63, 0.35);
 }
 
 /* Damage map — radar, bars, heat grid */
@@ -717,7 +719,7 @@ pre {
 }
 
 .lvl-1 .impact-bar-fill {
-  background: var(--accent);
+  background: var(--ok);
 }
 
 .impact-bar-dots {
@@ -745,8 +747,8 @@ pre {
 }
 
 .lvl-1 .dot.on {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--ok);
+  border-color: var(--ok);
 }
 
 .impact-count {
@@ -791,8 +793,8 @@ pre {
 }
 
 .cell.lvl-1 {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--ok);
+  border-color: var(--ok);
 }
 
 .cell.lvl-2 {
@@ -870,7 +872,7 @@ pre {
 
 /* Phosphor glow for headlines and key accents */
 .glow {
-  text-shadow: 0 0 14px rgba(63, 185, 80, 0.35);
+  text-shadow: 0 0 14px rgba(245, 183, 63, 0.35);
 }
 
 /* Terminal window chrome */
@@ -878,8 +880,8 @@ pre {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   overflow: hidden;
-  background: #0d1219;
-  box-shadow: var(--shadow), 0 0 60px rgba(63, 185, 80, 0.04);
+  background: var(--surface);
+  box-shadow: var(--shadow), 0 0 60px rgba(245, 183, 63, 0.04);
   margin-bottom: 18px;
 }
 
@@ -965,17 +967,13 @@ pre {
   color: var(--danger);
 }
 
-.term-cyan {
-  color: #39c5cf;
-}
-
 /* The live review mock */
 .term-demo {
   margin-top: 18px;
   padding: 16px 18px;
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
-  background: #0a0e14;
+  background: #050505;
   font-size: 12.5px;
 }
 
@@ -1025,7 +1023,7 @@ pre {
 
 .install-tab.active {
   color: var(--accent);
-  background: #0a0e14;
+  background: #050505;
   box-shadow: inset 0 2px 0 var(--accent);
 }
 
@@ -1038,7 +1036,7 @@ pre {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #0a0e14;
+  background: #050505;
   border: 1px solid var(--border);
   border-radius: 0 var(--r-md) var(--r-md) var(--r-md);
   padding: 14px 16px;
@@ -1142,7 +1140,7 @@ pre {
 
 .feature-card:hover {
   transform: translateY(-2px);
-  border-color: #2c3a4d;
+  border-color: #2e2e2e;
 }
 
 .feature-icon {
@@ -1152,8 +1150,8 @@ pre {
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: rgba(63, 185, 80, 0.1);
-  border: 1px solid rgba(63, 185, 80, 0.25);
+  background: rgba(245, 183, 63, 0.1);
+  border: 1px solid rgba(245, 183, 63, 0.25);
   color: var(--accent);
   margin-bottom: 12px;
 }
@@ -1228,7 +1226,7 @@ pre {
 }
 
 .compare td.compare-us {
-  background: rgba(63, 185, 80, 0.05);
+  background: rgba(245, 183, 63, 0.05);
 }
 
 .compare-cell {
@@ -1244,7 +1242,7 @@ pre {
 
 .compare-cell.yes {
   color: var(--ok);
-  background: rgba(63, 185, 80, 0.12);
+  background: rgba(245, 183, 63, 0.12);
 }
 
 .compare-cell.partial {
@@ -1374,7 +1372,7 @@ pre {
 
 .docs-nav-link.active {
   color: var(--accent);
-  background: rgba(63, 185, 80, 0.07);
+  background: rgba(245, 183, 63, 0.07);
 }
 
 .docs-nav-link.active .term-prompt {
@@ -1444,7 +1442,7 @@ pre {
 }
 
 .docs-pre {
-  background: #0a0e14;
+  background: #050505;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   padding: 14px 16px;
@@ -1568,7 +1566,7 @@ pre {
 
 .topnav-link.active {
   color: var(--accent);
-  background: rgba(63, 185, 80, 0.08);
+  background: rgba(245, 183, 63, 0.08);
 }
 
 /* Docs search */
@@ -1678,7 +1676,7 @@ pre {
 
 .docs-search-item.active,
 .docs-search-item:hover {
-  background: rgba(63, 185, 80, 0.09);
+  background: rgba(245, 183, 63, 0.09);
 }
 
 .docs-search-item-title {

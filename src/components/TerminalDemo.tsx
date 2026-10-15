@@ -13,7 +13,8 @@ const LINES: ReactNode[] = [
     <span className="term-prompt">$</span>zabibucanary review --staged
   </L>,
   <L key="2">
-    <span className="term-dim">[ zabibu canary ] a Zabibu Technika product · built by Tehillah Kachila</span>
+    <span className="term-prompt">[ zabibu canary ]</span>
+    <span className="term-dim"> a Zabibu Technika product · built by Tehillah Kachila</span>
   </L>,
   <L key="3">
     <span className="term-dim">reviewing 8 file change(s) · +24 / −2</span>

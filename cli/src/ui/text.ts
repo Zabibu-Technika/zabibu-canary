@@ -9,6 +9,8 @@ const C = {
   yellow: "\u001b[33m",
   red: "\u001b[31m",
   bold: "\u001b[1m",
+  // Canary amber — the brand accent (truecolor; degrades gracefully).
+  amber: "\u001b[38;2;245;183;63m",
 };
 
 function sevColor(severity: string): string {
@@ -18,7 +20,7 @@ function sevColor(severity: string): string {
 export function textReport(result: AnalysisResult, label: string): string {
   const verdict = verdictFor(result.findings);
   const lines: string[] = [];
-  lines.push(`${C.bold}${C.green}[ zabibu canary ]${C.reset} a Zabibu Technika product · built by Tehillah Kachila`);
+  lines.push(`${C.bold}${C.amber}[ zabibu canary ]${C.reset} a Zabibu Technika product · built by Tehillah Kachila`);
   lines.push(`${C.gray}${label}${C.reset}`);
   lines.push(
     `risk ${result.riskScore}/100 · grade ${result.grade} · ${verdict.label} ` +
@@ -37,7 +39,7 @@ export function textReport(result: AnalysisResult, label: string): string {
   } else {
     for (const f of result.findings) {
       lines.push(`${sevColor(f.severity)}${C.bold}[${f.severity}] ${f.title}${C.reset}`);
-      if (f.filePath) lines.push(`${C.gray}  file: ${f.filePath}${C.reset}`);
+      if (f.filePath) lines.push(`${C.amber}  file: ${f.filePath}${C.reset}`);
       lines.push(`${C.gray}  ${f.detail}${C.reset}`);
     }
   }

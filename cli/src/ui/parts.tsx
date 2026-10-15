@@ -6,7 +6,7 @@ import type { Finding } from "zabibucanary-engine";
 export function Header({ subtitle }: { subtitle?: string }) {
   return (
     <Box flexDirection="column" marginBottom={1}>
-      <Text bold color="green">
+      <Text bold color="#f5b73f">
         [ zabibu canary ]
       </Text>
       <Text color="gray">a Zabibu Technika product · built by Tehillah Kachila</Text>
@@ -45,7 +45,7 @@ export function FindingRow({ finding }: { finding: Finding }) {
       </Text>
       <Text color="gray">{`  why: ${plain.why}`}</Text>
       <Text color="gray">{`  fix: ${plain.fix}`}</Text>
-      {finding.filePath && <Text color="cyan">{`  file: ${finding.filePath}`}</Text>}
+      {finding.filePath && <Text color="#f5b73f">{`  file: ${finding.filePath}`}</Text>}
     </Box>
   );
 }
