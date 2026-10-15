@@ -15,6 +15,23 @@
     "url": "git+https://github.com/Zabibu-Technika/zabibu-canary.git",
     "directory": "packages/engine"
   },
+  "homepage": "https://github.com/Zabibu-Technika/zabibu-canary#readme",
+  "bugs": {
+    "url": "https://github.com/Zabibu-Technika/zabibu-canary/issues"
+  },
+  "author": "Tehillah Kachila",
+  "keywords": [
+    "security",
+    "static-analysis",
+    "code-review",
+    "diff",
+    "risk",
+    "ledger",
+    "ai"
+  ],
+  "engines": {
+    "node": ">=22.6.0"
+  },
   "scripts": {
     "test": "node --test \"src/analyze.test.ts\" \"src/impact.test.ts\" \"src/ledger.test.ts\""
   }

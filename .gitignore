@@ -20,5 +20,8 @@ data/
 .DS_Store
 Thumbs.db
 
+# npm pack output
+*.tgz
+
 .vercel
 .env*

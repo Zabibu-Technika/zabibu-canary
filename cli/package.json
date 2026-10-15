@@ -16,16 +16,31 @@
     "url": "git+https://github.com/Zabibu-Technika/zabibu-canary.git",
     "directory": "cli"
   },
-  "homepage": "https://github.com/Zabibu-Technika/zabibu-canary#readme",
+  "homepage": "https://zabibucanary.vercel.app",
+  "bugs": {
+    "url": "https://github.com/Zabibu-Technika/zabibu-canary/issues"
+  },
+  "author": "Tehillah Kachila",
+  "keywords": [
+    "cli",
+    "tui",
+    "code-review",
+    "ai",
+    "security",
+    "static-analysis",
+    "local-first",
+    "code-quality",
+    "canary"
+  ],
   "scripts": {
     "start": "tsx src/index.tsx",
     "demo": "tsx src/index.tsx demo"
   },
   "dependencies": {
     "zabibucanary-engine": "^0.1.0",
-    "ink": "latest",
-    "react": "latest",
-    "tsx": "latest"
+    "ink": "^8.0.0",
+    "react": "^19.3.1",
+    "tsx": "^4.23.15"
   },
   "engines": {
     "node": ">=22.6.0"
