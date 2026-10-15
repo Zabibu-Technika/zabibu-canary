@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getStore } from "@/lib/server/store";
 import { NewAnalysisForm } from "@/components/NewAnalysisForm";
 import { AnalysisTable } from "@/components/AnalysisTable";
@@ -146,7 +147,7 @@ export default async function DashboardPage() {
           </a>
           <a href="/install">install script</a>
           <a href="#install">install the CLI</a>
-          <a href="https://github.com/Zabibu-Technika/zabibu-canary#readme">docs</a>
+          <Link href="/docs">docs</Link>
         </nav>
         <p className="credit">
           a Zabibu Technika product · built by Tehillah Kachila · MIT licensed
