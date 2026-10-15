@@ -1,7 +1,7 @@
 // Plain-English translation layer. The engine speaks in categories; people
 // speak in consequences. Every finding becomes: what it is, why it matters,
 // and what to do about it — no jargon.
-import type { Finding } from "./analyze";
+import type { Finding } from "./analyze.ts";
 
 export interface PlainFinding {
   cta: string;

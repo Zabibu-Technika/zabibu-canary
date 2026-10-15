@@ -2,8 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FileSearch, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
 import { getStore } from "@/lib/server/store";
-import { verdictFor } from "@/lib/server/plain";
-import { SECTORS, SECTOR_INFO, sectorImpacts } from "@/lib/server/impact";
+import { SECTORS, SECTOR_INFO, sectorImpacts, verdictFor } from "@zabibu/engine";
 import { RiskGauge } from "@/components/RiskGauge";
 import { FindingList } from "@/components/FindingList";
 import { ApprovePanel } from "@/components/ApprovePanel";
@@ -33,7 +32,7 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
           <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
           All checks
         </Link>
-        <span className="tagline">GroundTruth</span>
+        <span className="tagline">zabibu canary</span>
       </header>
 
       <section className="card detail-head">
@@ -101,6 +100,10 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
         <summary>The exact input we checked</summary>
         <pre>{analysis.diff}</pre>
       </details>
+
+      <p className="credit">
+        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila
+      </p>
     </main>
   );
 }

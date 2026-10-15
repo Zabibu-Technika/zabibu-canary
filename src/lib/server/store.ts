@@ -1,8 +1,8 @@
 // Dual-database store: local SQLite (dev) or Supabase REST (prod), selected by env.
 import { randomUUID } from "node:crypto";
 import { getDb } from "./db.ts";
-import { signApproval, verifyChain, LEDGER_SEED, type ApprovalPayload } from "./ledger.ts";
-import type { AnalysisResult, Finding } from "./analyze.ts";
+import { signApproval, verifyChain, LEDGER_SEED, type ApprovalPayload } from "@zabibu/engine";
+import type { AnalysisResult, Finding } from "@zabibu/engine";
 
 export interface Analysis {
   id: string;

@@ -1,0 +1,13 @@
+{
+  "name": "@zabibu/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Zabibu Canary analysis engine — diff parsing, risk detection, sector impact mapping, and the signed approval ledger. Shared by the web app and the CLI.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"src/analyze.test.ts\" \"src/impact.test.ts\" \"src/ledger.test.ts\""
+  }
+}

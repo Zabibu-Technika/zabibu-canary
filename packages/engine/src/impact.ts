@@ -1,7 +1,7 @@
 // Sector impact model: maps findings to the five damage sectors —
 // security, trust, usage, accessibility, dependability.
 // Pure functions; unit-tested with node:test.
-import type { Finding } from "./analyze";
+import type { Finding } from "./analyze.ts";
 
 export const SECTORS = ["security", "trust", "usage", "accessibility", "dependability"] as const;
 export type Sector = (typeof SECTORS)[number];

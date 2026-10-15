@@ -1,6 +1,6 @@
 import { AlertOctagon, AlertTriangle, Info, ShieldCheck } from "lucide-react";
 import type { StoredFinding } from "@/lib/server/store";
-import { plainify } from "@/lib/server/plain";
+import { plainify } from "@zabibu/engine";
 
 const ICONS = {
   critical: AlertOctagon,

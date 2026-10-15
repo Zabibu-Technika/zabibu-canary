@@ -1,0 +1,23 @@
+{
+  "name": "zabibu-canary",
+  "version": "0.1.0",
+  "description": "Local-first code review for AI-made changes — the CodeRabbit alternative that runs in your terminal. A Zabibu Technika product, built by Tehillah Kachila.",
+  "type": "module",
+  "bin": {
+    "zabibu": "./bin/zabibu.mjs",
+    "zabibu-canary": "./bin/zabibu.mjs"
+  },
+  "scripts": {
+    "start": "tsx src/index.tsx",
+    "demo": "tsx src/index.tsx demo"
+  },
+  "dependencies": {
+    "@zabibu/engine": "*",
+    "ink": "latest",
+    "react": "latest",
+    "tsx": "latest"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  }
+}

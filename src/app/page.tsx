@@ -12,18 +12,21 @@ export default async function DashboardPage() {
       <header className="topbar">
         <span className="brand">
           <ShieldCheck size={22} strokeWidth={1.75} aria-hidden="true" />
-          GroundTruth
+          zabibu canary
         </span>
-        <span className="tagline">The safety check for AI-made changes</span>
+        <span className="tagline">the safety check for AI-made changes</span>
       </header>
 
       <section className="card">
-        <h1>Your AI wrote the code. But what could go wrong?</h1>
+        <h1>
+          Your AI wrote the code. But what could go wrong?
+          <span className="caret" aria-hidden="true" />
+        </h1>
         <p className="lede">
           Tools like ChatGPT, Claude, and Copilot — and coding agents like OpenCode, Claude Code, and
           Cline — now write a lot of the code behind apps and websites. Most of it is fine — until it
           quietly touches passwords, who gets in, or the pieces that keep everything running.
-          GroundTruth checks any change in plain English, before it goes live. No coding skills required.
+          Zabibu Canary checks any change in plain English, before it goes live. No coding skills required.
         </p>
         <h2>How it works</h2>
         <ol className="steps">
@@ -59,6 +62,8 @@ export default async function DashboardPage() {
         <NewAnalysisForm />
         <p className="helper" style={{ marginTop: 14 }}>
           Everything stays on your own computer — no account, no cloud, nothing to install.
+          Prefer your terminal? <code className="file-path">npx zabibu-canary review</code> runs the
+          same engine locally, with a git hook that gates every push.
         </p>
       </section>
 
@@ -67,9 +72,8 @@ export default async function DashboardPage() {
         <AnalysisTable analyses={analyses} />
       </section>
 
-      <p className="footer-note">
-        Made for people who never read code. Every finding comes with what it means, why it matters,
-        and how to fix it.
+      <p className="credit">
+        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila
       </p>
     </main>
   );

@@ -1,5 +1,4 @@
-import { SECTORS, SECTOR_INFO, findingSectors } from "@/lib/server/impact";
-import { plainify } from "@/lib/server/plain";
+import { SECTORS, SECTOR_INFO, findingSectors, plainify } from "@zabibu/engine";
 import type { StoredFinding } from "@/lib/server/store";
 
 const SHORT: Record<string, string> = {

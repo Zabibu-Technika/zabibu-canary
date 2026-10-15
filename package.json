@@ -1,14 +1,20 @@
 {
-  "name": "groundtruth",
+  "name": "zabibu-canary-web",
   "version": "0.1.0",
   "private": true,
-  "description": "Preflight authorization for AI coding agents — blast-radius simulation with a signed approval ledger.",
+  "description": "Zabibu Canary — the safety check for AI-made changes. A Zabibu Technika product, built by Tehillah Kachila.",
+  "workspaces": [
+    "packages/*",
+    "cli"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test \"src/lib/server/analyze.test.ts\" \"src/lib/server/ledger.test.ts\" \"src/lib/server/impact.test.ts\" \"src/lib/server/store.test.ts\""
+    "test": "npm test --workspaces --if-present",
+    "test:web": "node --test \"src/lib/server/store.test.ts\"",
+    "cli": "npm start --workspace zabibu-canary --"
   },
   "overrides": {
     "postcss": "^8.5.23"

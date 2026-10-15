@@ -1,4 +1,4 @@
-import { SECTORS, SECTOR_INFO, type SectorImpact } from "@/lib/server/impact";
+import { SECTORS, SECTOR_INFO, type SectorImpact } from "@zabibu/engine";
 
 export function ImpactBars({ impacts }: { impacts: Record<string, SectorImpact> }) {
   return (

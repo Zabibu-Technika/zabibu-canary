@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeContent } from "@/lib/server/analyze";
+import { analyzeContent, DEMO_DIFF } from "@zabibu/engine";
 import { getStore } from "@/lib/server/store";
-import { DEMO_DIFF } from "@/lib/server/demo-diff";
 import { revalidatePath } from "next/cache";
 
 // Two modes only, from the user's point of view:

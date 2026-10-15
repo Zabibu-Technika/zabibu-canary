@@ -1,62 +1,96 @@
-# GroundTruth
+# zabibu canary
 
-**The safety check for AI-made changes — in plain English.**
+**The safety check for AI-made changes — in plain English, in your terminal or browser.**
 
-Your AI wrote the code. But what could go wrong? Paste anything your AI gave
-you — code, changes, notes — and GroundTruth tells you, in words anyone can
-understand, what risks are hiding in it before it goes live. Then approve with
-one click and get a tamper-proof receipt proving a human said yes.
+Your AI wrote the code. But what could go wrong? Paste anything your AI gave you — code,
+changes, notes — and Zabibu Canary tells you, in words anyone can understand, what risks are
+hiding in it before it goes live. Then approve with one click and get a tamper-proof receipt
+proving a human said yes.
 
-For developers: it parses unified diffs or any pasted text (ChatGPT/Claude output,
-coding agents like OpenCode/Claude Code/Cline/Cursor/Codex), scores blast radius
-across schema / auth / secrets / dependencies / infrastructure, maps damage
-across five sectors (security, trust, usage, accessibility, dependability), and
-signs approvals into an HMAC hash-chained ledger — a compliance artifact for
-EU AI Act Article 14 (human oversight), SOC 2, and SOX.
+**A Zabibu Technika product · built by Tehillah Kachila.**
 
-## Quickstart
+- Web app: paste a diff, read the report, sign the receipt
+- CLI (`zabibu`): the same engine, locally, with a pre-push gate — a local-first
+  alternative to CodeRabbit that never sends your code anywhere
+- Shared engine: identical analysis online and offline (one source of truth)
+
+## Quickstart — web
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
 ```
 
-No env setup needed for local dev. Click **Run demo analysis** on the dashboard
-to see the engine against a realistic risky diff.
+No env setup for local dev. Click **Show me an example** to see the engine against a
+realistic risky diff.
+
+## Quickstart — CLI
+
+```bash
+# run from this repo (no install)
+npx tsx cli/src/index.tsx demo
+
+# or link the bin for this session
+npm link --workspace cli
+zabibu demo
+zabibu review                 # review staged changes (or the working tree)
+zabibu review --watch         # re-review automatically as files change
+zabibu review --format json   # machine output for CI
+zabibu review --format github # ::error / ::warning annotations for GitHub Actions
+zabibu hook install           # pre-push gate: blocks risky pushes without a signed approval
+zabibu hook remove
+```
+
+Install globally for real use: `npm install -g zabibu-canary` (after publishing), then
+`zabibu review` in any repo.
+
+### How the local approval loop works
+
+Each review is identified by a hash of the exact diff. Approving in the TUI (`a`) records an
+HMAC-signed approval in `~/.zabibu-canary/ledger.jsonl` — the same hash-chain construction as
+the web app. Re-running the same diff (including from the installed git hook) sees the existing
+receipt and passes. Escape hatch: `CANARY_ACK=1` overrides the gate.
+
+Exit codes: `0` = clean or approved, `1` = critical findings without a signed approval.
+
+## Workspace layout
+
+```
+packages/engine/   shared analysis engine (diff parsing, risk detectors,
+                   sector impact map, approval ledger) — pure, unit-tested
+cli/               zabibu-canary CLI (Ink TUI + git integration)
+src/               Next.js web app (App Router)
+supabase/          production schema (RLS enabled)
+```
 
 ## Scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Dev server on :3000 |
-| `npm run build` / `npm start` | Production build & serve |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm test` | Engine + ledger unit tests (node:test) |
+| `npm run dev` | Web dev server on :3000 |
+| `npm run build` | Production web build |
+| `npm test` | All workspace tests (engine + web) |
+| `npm run typecheck` | `tsc --noEmit` for the web app |
 
 ## How it works
 
-- **Engine** (`src/lib/server/analyze.ts`) — pure diff parser + risk detectors.
-  No I/O; fully unit-tested.
-- **Ledger** (`src/lib/server/ledger.ts`) — HMAC-SHA256 hash chain over
-  `(analysisId, signer, signedAt)` with the previous signature as the chain
-  link. Tampering with any record invalidates every later signature.
-- **Store** (`src/lib/server/store.ts`) — dual-database by design:
-  - dev: `DATABASE_URL=file:./data/groundtruth.db` → built-in `node:sqlite`
-    (zero dependencies)
-  - prod: `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` → Supabase REST
-    (schema in `supabase/migrations/0001_init.sql`, RLS enabled)
+- **Engine** (`packages/engine`): diff parser + detectors for secrets, schema, auth surfaces,
+  unpinned dependencies, lockfile drift, infrastructure, accessibility regressions, and blast
+  radius. Every finding maps to five damage sectors — security, trust, usage, accessibility,
+  dependability — visualized as a radar, bars, and a heat grid.
+- **Ledger**: HMAC-SHA256 hash chain over `(analysisId, signer, signedAt)`. Tampering with any
+  record invalidates every later signature.
+- **Storage**: dual-database by design — local `node:sqlite` in dev (zero dependencies),
+  Supabase REST in production (`supabase/migrations/0001_init.sql`, RLS enabled).
 
 ## Security model
 
-- All API input validated with Zod.
-- Secrets never enter the database or logs; the analysis engine flags them in
-  diffs instead of storing their values.
+- All API input validated with Zod; secret values are flagged, never stored.
 - `.env` is git-ignored; `.env.example` carries placeholders only.
-- The approval chain verifies on every detail-page load and displays the
-  verification result.
+- Commits and tags should be signed (see `git config user.signingkey`) before public release.
 
-## Roadmap
+## Deploy
 
-- GitHub App / PR integration (analyze at PR open, block merge without signature)
--SARIF export for enterprise scanners
-- SSO + team policies (who may sign which risk grades)
+Production target: **Vercel** (auto-deploys on push to `main`).
+Repo: **github.com/Zabibu-Technika/zabibu-canary** (private).
+Set `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` in Vercel env for persistent storage.
