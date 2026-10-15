@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft, FileSearch, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
-import { getStore, type AnalysisDetail } from "@/lib/server/store";
-import { SECTORS, SECTOR_INFO, sectorImpacts, verdictFor } from "zabibucanary-engine";
+import { getStore, type AnalysisDetail, type StoredFinding } from "@/lib/server/store";
+import { analyzeContent, DEMO_DIFF, SECTORS, SECTOR_INFO, sectorImpacts, verdictFor, type Finding } from "zabibucanary-engine";
+import { unseal } from "@/lib/server/token";
 import { RiskGauge } from "@/components/RiskGauge";
 import { FindingList } from "@/components/FindingList";
 import { ApprovePanel } from "@/components/ApprovePanel";
@@ -11,13 +12,84 @@ import { ImpactGrid } from "@/components/ImpactGrid";
 
 export const dynamic = "force-dynamic";
 
-export default async function AnalysisPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AnalysisPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { id } = await params;
+  const sp = await searchParams;
+
+  // 1. The database (primary: local SQLite, or Supabase in production).
   let detail: AnalysisDetail | null = null;
   try {
     detail = await getStore().getAnalysisDetail(id);
   } catch {
     detail = null;
+  }
+
+  // 2. A signed stateless token in the URL — works on any server instance.
+  if (!detail && typeof sp.t === "string") {
+    const payload = unseal<{
+      id: string;
+      repo: string;
+      sourceKind: string;
+      diff: string;
+      riskScore: number;
+      grade: string;
+      filesChanged: number;
+      insertions: number;
+      deletions: number;
+      createdAt: string;
+      findings: Finding[];
+    }>(sp.t);
+    if (payload && payload.id === id) {
+      detail = {
+        analysis: {
+          id: payload.id,
+          repo: payload.repo,
+          sourceKind: payload.sourceKind,
+          diff: payload.diff,
+          riskScore: payload.riskScore,
+          grade: payload.grade,
+          filesChanged: payload.filesChanged,
+          insertions: payload.insertions,
+          deletions: payload.deletions,
+          createdAt: payload.createdAt,
+        },
+        findings: payload.findings.map(
+          (f, i): StoredFinding => ({ ...f, id: `token-${i}`, analysisId: payload.id }),
+        ),
+        approvals: [],
+        chainValid: true,
+      };
+    }
+  }
+
+  // 3. The demo renders fresh from the embedded diff — no storage at all.
+  if (!detail && id === "demo") {
+    const result = analyzeContent(DEMO_DIFF);
+    detail = {
+      analysis: {
+        id: "demo",
+        repo: "Example: a realistic change from an AI coding session",
+        sourceKind: "demo",
+        diff: DEMO_DIFF,
+        riskScore: result.riskScore,
+        grade: result.grade,
+        filesChanged: result.filesChanged,
+        insertions: result.insertions,
+        deletions: result.deletions,
+        createdAt: new Date().toISOString(),
+      },
+      findings: result.findings.map(
+        (f, i): StoredFinding => ({ ...f, id: `demo-${i}`, analysisId: "demo" }),
+      ),
+      approvals: [],
+      chainValid: true,
+    };
   }
 
   if (!detail) {

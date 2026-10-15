@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
-const SITE = "https://groundtruth-azure.vercel.app";
+const SITE = "https://zabibucanary.vercel.app";
 
 const TABS: { id: string; label: string; cmd: string }[] = [
   { id: "curl", label: "curl", cmd: `curl -fsSL ${SITE}/install | bash` },

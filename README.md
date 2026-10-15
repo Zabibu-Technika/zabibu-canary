@@ -28,7 +28,7 @@ realistic risky diff.
 
 ```bash
 # option 1 — the install script (works today)
-curl -fsSL https://groundtruth-azure.vercel.app/install | bash
+curl -fsSL https://zabibucanary.vercel.app/install | bash
 
 # option 2 — from source
 git clone https://github.com/Zabibu-Technika/zabibu-canary.git

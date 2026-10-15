@@ -19,9 +19,9 @@ export function NewAnalysisForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(mode === "demo" ? { mode } : { mode, content }),
       });
-      const data = (await res.json()) as { id?: string; error?: string };
-      if (!res.ok || !data.id) throw new Error(data.error ?? "Something went wrong. Please try again.");
-      router.push(`/analysis/${data.id}`);
+      const data = (await res.json()) as { redirect?: string; id?: string; error?: string };
+      if (!res.ok || !data.redirect) throw new Error(data.error ?? "Something went wrong. Please try again.");
+      router.push(data.redirect);
       router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");

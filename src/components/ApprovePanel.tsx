@@ -1,9 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PenLine, ShieldCheck } from "lucide-react";
 import type { Approval } from "@/lib/server/store";
+
+const STORE_KEY = "zabibucanary:receipts";
+
+// In stateless (public demo) renders, the server cannot recall approvals made
+// on another instance — so receipts are also kept in this browser.
+function readLocal(analysisId: string): Approval[] {
+  try {
+    const all = JSON.parse(localStorage.getItem(STORE_KEY) ?? "{}") as Record<string, Approval[]>;
+    return all[analysisId] ?? [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLocal(analysisId: string, record: Approval): void {
+  try {
+    const all = JSON.parse(localStorage.getItem(STORE_KEY) ?? "{}") as Record<string, Approval[]>;
+    all[analysisId] = [...(all[analysisId] ?? []), record];
+    localStorage.setItem(STORE_KEY, JSON.stringify(all));
+  } catch {
+    /* storage full or unavailable — receipts still show for this session */
+  }
+}
 
 export function ApprovePanel({
   analysisId,
@@ -18,6 +41,14 @@ export function ApprovePanel({
   const [signer, setSigner] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [localReceipts, setLocalReceipts] = useState<Approval[]>([]);
+
+  useEffect(() => {
+    setLocalReceipts(readLocal(analysisId));
+  }, [analysisId]);
+
+  const shown = approvals.length > 0 ? approvals : localReceipts;
+  const fromBrowser = approvals.length === 0 && localReceipts.length > 0;
 
   async function sign() {
     setBusy(true);
@@ -30,6 +61,8 @@ export function ApprovePanel({
       });
       const data = (await res.json()) as { id?: string; error?: string };
       if (!res.ok || !data.id) throw new Error(data.error ?? "Something went wrong. Please try again.");
+      writeLocal(analysisId, data as unknown as Approval);
+      setLocalReceipts(readLocal(analysisId));
       setSigner("");
       router.refresh();
     } catch (e) {
@@ -66,7 +99,7 @@ export function ApprovePanel({
         </p>
       )}
 
-      {approvals.length > 0 ? (
+      {shown.length > 0 ? (
         <>
           <table className="ledger">
             <thead>
@@ -78,7 +111,7 @@ export function ApprovePanel({
               </tr>
             </thead>
             <tbody>
-              {approvals.map((a, i) => (
+              {shown.map((a, i) => (
                 <tr key={a.id}>
                   <td className="meta">{i + 1}</td>
                   <td>{a.signer}</td>
@@ -91,7 +124,9 @@ export function ApprovePanel({
             </tbody>
           </table>
           <p style={{ marginTop: 14, marginBottom: 0 }}>
-            {chainValid ? (
+            {fromBrowser ? (
+              <span className="badge badge-info">Receipt signed and kept in this browser (public demo)</span>
+            ) : chainValid ? (
               <span className="badge badge-ok">
                 <ShieldCheck size={14} strokeWidth={2} aria-hidden="true" />
                 Receipt verified

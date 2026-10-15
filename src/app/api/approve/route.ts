@@ -15,17 +15,19 @@ export async function POST(req: NextRequest) {
   }
 
   const { analysisId, signer } = parsed.data;
-  const store = getStore();
-  const detail = await store.getAnalysisDetail(analysisId);
-  if (!detail) {
-    return NextResponse.json({ error: "Analysis not found" }, { status: 404 });
-  }
 
-  const approval = await store.approve(analysisId, signer.trim());
+  // The record is self-contained (HMAC over analysisId + signer + time, chained
+  // to the previous signature), so signing works even when the analysis itself
+  // lives in another server instance — the demo's stateless mode.
+  const approval = await getStore().approve(analysisId, signer.trim());
+
   revalidatePath(`/analysis/${analysisId}`);
   return NextResponse.json({
     id: approval.id,
-    sigPreview: approval.sig.slice(0, 16),
+    analysisId: approval.analysisId,
+    signer: approval.signer,
     signedAt: approval.signedAt,
+    prevSig: approval.prevSig,
+    sig: approval.sig,
   });
 }
