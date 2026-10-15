@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Link from "next/link";
-import { CanaryLogo } from "@/components/CanaryLogo";
+import { Topbar } from "@/components/Topbar";
 import { DocsNav } from "@/components/DocsNav";
+import { DocsSearch } from "@/components/DocsSearch";
 
 export const metadata: Metadata = {
   title: {
@@ -15,15 +15,10 @@ export const metadata: Metadata = {
 export default function DocsLayout({ children }: { children: ReactNode }) {
   return (
     <main className="app-shell docs-shell">
-      <header className="topbar">
-        <Link href="/" className="brand">
-          <CanaryLogo size={24} />
-          zabibu canary
-        </Link>
-        <span className="tagline">docs</span>
-      </header>
+      <Topbar />
       <div className="docs-layout">
         <aside className="docs-sidebar">
+          <DocsSearch />
           <DocsNav />
         </aside>
         <article className="docs-content">{children}</article>

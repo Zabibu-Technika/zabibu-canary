@@ -13,7 +13,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "npm test --workspaces --if-present",
-    "test:web": "node --test \"src/lib/server/store.test.ts\"",
+    "test:web": "node --test \"src/lib/server/store.test.ts\" \"src/lib/docs-index.test.ts\"",
     "cli": "npm start --workspace zabibu-canary --"
   },
   "overrides": {

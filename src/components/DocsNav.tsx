@@ -32,6 +32,10 @@ const SECTIONS: { title: string; items: { href: string; label: string }[] }[] = 
       { href: "/docs/deployment", label: "Deployment" },
     ],
   },
+  {
+    title: "Help",
+    items: [{ href: "/docs/faq", label: "FAQ" }],
+  },
 ];
 
 export function DocsNav() {

@@ -8,6 +8,7 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { CliHelp } from "@/components/CliHelp";
 import { Comparison } from "@/components/Comparison";
 import { CanaryLogo } from "@/components/CanaryLogo";
+import { Topbar } from "@/components/Topbar";
 import { ArrowUpRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -17,13 +18,7 @@ export default async function DashboardPage() {
   return (
     <main className="app-shell">
       {/* ── Topbar ──────────────────────────────────────────────────────── */}
-      <header className="topbar">
-        <span className="brand">
-          <CanaryLogo size={26} />
-          zabibu canary
-        </span>
-        <span className="tagline">the safety check for AI-made changes</span>
-      </header>
+      <Topbar />
 
       {/* ── Hero: the whole site is one terminal session ─────────────────── */}
       <section className="term-window">
