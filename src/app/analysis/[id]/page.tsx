@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft, FileSearch, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
-import { getStore } from "@/lib/server/store";
+import { getStore, type AnalysisDetail } from "@/lib/server/store";
 import { SECTORS, SECTOR_INFO, sectorImpacts, verdictFor } from "@zabibu/engine";
 import { RiskGauge } from "@/components/RiskGauge";
 import { FindingList } from "@/components/FindingList";
@@ -14,8 +13,41 @@ export const dynamic = "force-dynamic";
 
 export default async function AnalysisPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const detail = await getStore().getAnalysisDetail(id);
-  if (!detail) notFound();
+  let detail: AnalysisDetail | null = null;
+  try {
+    detail = await getStore().getAnalysisDetail(id);
+  } catch {
+    detail = null;
+  }
+
+  if (!detail) {
+    return (
+      <main className="app-shell">
+        <header className="topbar">
+          <Link href="/" className="backlink">
+            <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+            All checks
+          </Link>
+          <span className="tagline">zabibu canary</span>
+        </header>
+        <section className="card">
+          <h1>This check has expired from this server</h1>
+          <p className="lede">
+            The public demo runs on temporary storage, so a check can vanish when it lands on a
+            different server instance. Run it again below — it takes five seconds.
+          </p>
+          <div className="row">
+            <Link className="btn btn-primary" href="/">
+              Run a new check
+            </Link>
+          </div>
+        </section>
+        <p className="credit">
+          <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila
+        </p>
+      </main>
+    );
+  }
 
   const { analysis, findings, approvals, chainValid } = detail;
   const verdict = verdictFor(findings);
