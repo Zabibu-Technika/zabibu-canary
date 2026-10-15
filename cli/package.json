@@ -1,18 +1,28 @@
 {
-  "name": "zabibu-canary",
+  "name": "zabibucanary",
   "version": "0.1.0",
   "description": "Local-first code review for AI-made changes — the CodeRabbit alternative that runs in your terminal. A Zabibu Technika product, built by Tehillah Kachila.",
   "type": "module",
+  "license": "MIT",
   "bin": {
-    "zabibu": "./bin/zabibu.mjs",
-    "zabibu-canary": "./bin/zabibu.mjs"
+    "zabibucanary": "./bin/zabibucanary.mjs"
   },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zabibu-Technika/zabibu-canary.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/Zabibu-Technika/zabibu-canary#readme",
   "scripts": {
     "start": "tsx src/index.tsx",
     "demo": "tsx src/index.tsx demo"
   },
   "dependencies": {
-    "@zabibu/engine": "*",
+    "zabibucanary-engine": "^0.1.0",
     "ink": "latest",
     "react": "latest",
     "tsx": "latest"

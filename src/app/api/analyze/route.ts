@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeContent, DEMO_DIFF } from "@zabibu/engine";
+import { analyzeContent, DEMO_DIFF } from "zabibucanary-engine";
 import { getStore } from "@/lib/server/store";
 import { revalidatePath } from "next/cache";
 

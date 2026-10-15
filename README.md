@@ -27,22 +27,25 @@ realistic risky diff.
 ## Quickstart — CLI
 
 ```bash
-# run from this repo (no install)
-npx tsx cli/src/index.tsx demo
+# option 1 — the install script (works today)
+curl -fsSL https://groundtruth-azure.vercel.app/install | bash
 
-# or link the bin for this session
-npm link --workspace cli
-zabibu demo
-zabibu review                 # review staged changes (or the working tree)
-zabibu review --watch         # re-review automatically as files change
-zabibu review --format json   # machine output for CI
-zabibu review --format github # ::error / ::warning annotations for GitHub Actions
-zabibu hook install           # pre-push gate: blocks risky pushes without a signed approval
-zabibu hook remove
+# option 2 — from source
+git clone https://github.com/Zabibu-Technika/zabibu-canary.git
+cd zabibu-canary && npm install && npm link -w cli
+
+# then, in any repo:
+zabibucanary review                 # review staged changes (or the working tree)
+zabibucanary review --watch         # re-review automatically as files change
+zabibucanary review --format json   # machine output for CI
+zabibucanary review --format github # ::error / ::warning annotations for GitHub Actions
+zabibucanary hook install           # pre-push gate: blocks risky pushes without a signed approval
+zabibucanary hook remove
+zabibucanary demo                   # the bundled example review
 ```
 
-Install globally for real use: `npm install -g zabibu-canary` (after publishing), then
-`zabibu review` in any repo.
+`npm install -g zabibucanary` goes live when the package is published to npm
+(pending `npm login` on the maintainer account — every other command above works today).
 
 ### How the local approval loop works
 

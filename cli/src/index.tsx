@@ -4,7 +4,7 @@ import { parseArgs } from "node:util";
 import { createHash, randomUUID } from "node:crypto";
 import { render } from "ink";
 import React from "react";
-import { analyzeContent, DEMO_DIFF } from "@zabibu/engine";
+import { analyzeContent, DEMO_DIFF } from "zabibucanary-engine";
 import { collectDiff, inGitRepo, signer } from "./lib/git.ts";
 import { readLedger } from "./lib/ledger-file.ts";
 import { ReviewApp, type ReviewState } from "./ui/ReviewApp.tsx";
@@ -16,15 +16,15 @@ const HELP = `
   a Zabibu Technika product · built by Tehillah Kachila
 
   usage:
-    zabibu review              review staged changes (or the working tree)
+    zabibucanary review              review staged changes (or the working tree)
       --staged                review only staged changes
       --working               review only the working tree
       --range <a>..<b>        review an explicit git range (used by the git hook)
       --watch, -w             re-review automatically as files change
       --format <fmt>          text (default) | json | github
-    zabibu demo               run the bundled example review
-    zabibu hook install       install the pre-push gate in this repo
-    zabibu hook remove        remove the gate
+    zabibucanary demo               run the bundled example review
+    zabibucanary hook install       install the pre-push gate in this repo
+    zabibucanary hook remove        remove the gate
     zabibu --version
 
   exit codes: 0 = clean or approved · 1 = critical findings without a signed approval

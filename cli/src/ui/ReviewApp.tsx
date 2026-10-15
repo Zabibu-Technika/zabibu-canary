@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Text, useApp, useInput } from "ink";
 import fs from "node:fs";
-import { analyzeContent, sectorImpacts, verdictFor, type AnalysisResult } from "@zabibu/engine";
+import { analyzeContent, sectorImpacts, verdictFor, type AnalysisResult } from "zabibucanary-engine";
 import { appendApproval, readLedger } from "../lib/ledger-file.ts";
 import { collectDiff } from "../lib/git.ts";
 import { FindingRow, Header, SectorBars } from "./parts.tsx";
@@ -84,5 +84,5 @@ export function ReviewApp({ analysisId, result, signer, watch, state }: Props) {
 }
 
 function readLedgerPath(): string {
-  return `${process.env.USERPROFILE ?? process.env.HOME}/.zabibu-canary/ledger.jsonl`;
+  return `${process.env.USERPROFILE ?? process.env.HOME}/.zabibucanary/ledger.jsonl`;
 }

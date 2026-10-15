@@ -1,4 +1,4 @@
-import { SECTORS, SECTOR_INFO, type SectorImpact } from "@zabibu/engine";
+import { SECTORS, SECTOR_INFO, type SectorImpact } from "zabibucanary-engine";
 
 const SIZE = 300;
 const C = SIZE / 2;

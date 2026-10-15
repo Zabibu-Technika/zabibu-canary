@@ -1,4 +1,4 @@
-import type { Verdict } from "@zabibu/engine";
+import type { Verdict } from "zabibucanary-engine";
 
 export function RiskGauge({
   score,

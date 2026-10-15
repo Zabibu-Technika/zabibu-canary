@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import type { Analysis } from "@/lib/server/store";
-import { verdictForGrade } from "@zabibu/engine";
+import { verdictForGrade } from "zabibucanary-engine";
 
 export function AnalysisTable({ analyses }: { analyses: Analysis[] }) {
   if (analyses.length === 0) {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, FileSearch, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
 import { getStore, type AnalysisDetail } from "@/lib/server/store";
-import { SECTORS, SECTOR_INFO, sectorImpacts, verdictFor } from "@zabibu/engine";
+import { SECTORS, SECTOR_INFO, sectorImpacts, verdictFor } from "zabibucanary-engine";
 import { RiskGauge } from "@/components/RiskGauge";
 import { FindingList } from "@/components/FindingList";
 import { ApprovePanel } from "@/components/ApprovePanel";

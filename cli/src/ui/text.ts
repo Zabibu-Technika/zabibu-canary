@@ -1,6 +1,6 @@
 // Non-interactive report formats: colored text for terminals, GitHub Actions
 // annotations for CI, and JSON for tooling.
-import { sectorImpacts, verdictFor, type AnalysisResult } from "@zabibu/engine";
+import { sectorImpacts, verdictFor, type AnalysisResult } from "zabibucanary-engine";
 
 const C = {
   reset: "\u001b[0m",
@@ -60,7 +60,7 @@ export function githubReport(result: AnalysisResult): string {
 export function jsonReport(result: AnalysisResult): string {
   return JSON.stringify(
     {
-      tool: "zabibu-canary",
+      tool: "zabibucanary",
       vendor: "Zabibu Technika",
       author: "Tehillah Kachila",
       riskScore: result.riskScore,

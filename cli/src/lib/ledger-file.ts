@@ -4,7 +4,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
-import { LEDGER_SEED, signApproval, verifyChain, type ApprovalPayload } from "@zabibu/engine";
+import { LEDGER_SEED, signApproval, verifyChain, type ApprovalPayload } from "zabibucanary-engine";
 
 export interface LedgerRecord extends ApprovalPayload {
   id: string;
@@ -13,11 +13,11 @@ export interface LedgerRecord extends ApprovalPayload {
   analysisId: string;
 }
 
-const DIR = join(homedir(), ".zabibu-canary");
+const DIR = join(homedir(), ".zabibucanary");
 const FILE = join(DIR, "ledger.jsonl");
 
 function secret(): string {
-  return process.env.ZABIBU_SECRET ?? "zabibu-canary-local-dev-secret";
+  return process.env.ZABIBU_SECRET ?? "zabibucanary-local-dev-secret";
 }
 
 export function ledgerPath(): string {

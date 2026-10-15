@@ -5,13 +5,17 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "zabibu canary — the safety check for AI-made changes",
   description:
-    "Check any change your AI made, in plain English, before it goes live. Approve with one click and get a tamper-proof receipt. A Zabibu Technika product, built by Tehillah Kachila.",
+    "Every line your coding agent writes, checked before it ships. Plain-English risk, five-sector damage maps, signed receipts. A Zabibu Technika product, built by Tehillah Kachila.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* CRT scanlines — decorative, ignores the pointer */}
+        <div className="scanlines" aria-hidden="true" />
+      </body>
     </html>
   );
 }

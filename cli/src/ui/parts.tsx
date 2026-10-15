@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "ink";
-import { SECTORS, SECTOR_INFO, plainify, type SectorImpact } from "@zabibu/engine";
-import type { Finding } from "@zabibu/engine";
+import { SECTORS, SECTOR_INFO, plainify, type SectorImpact } from "zabibucanary-engine";
+import type { Finding } from "zabibucanary-engine";
 
 export function Header({ subtitle }: { subtitle?: string }) {
   return (

@@ -1,6 +1,8 @@
 import { getStore } from "@/lib/server/store";
 import { NewAnalysisForm } from "@/components/NewAnalysisForm";
 import { AnalysisTable } from "@/components/AnalysisTable";
+import { InstallTabs } from "@/components/InstallTabs";
+import { TerminalDemo } from "@/components/TerminalDemo";
 import { ShieldCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -9,33 +11,56 @@ export default async function DashboardPage() {
   const analyses = await getStore().listAnalyses(25);
   return (
     <main className="app-shell">
-      <header className="topbar">
-        <span className="brand">
-          <ShieldCheck size={22} strokeWidth={1.75} aria-hidden="true" />
-          zabibu canary
-        </span>
-        <span className="tagline">the safety check for AI-made changes</span>
-      </header>
+      {/* The whole site is one terminal session */}
+      <section className="term-window">
+        <div className="term-titlebar">
+          <span className="term-dots" aria-hidden="true">
+            <span className="term-dot r" />
+            <span className="term-dot y" />
+            <span className="term-dot g" />
+          </span>
+          <span className="term-title">zabibu@canary: ~/preflight — 80×24</span>
+        </div>
+        <div className="term-body">
+          <p className="term-line">
+            <span className="term-prompt">$</span>./canary --who
+          </p>
+          <h1 className="glow">
+            Your AI never sleeps.
+            <br />
+            Neither does the blast radius.<span className="caret" aria-hidden="true" />
+          </h1>
+          <p className="lede">
+            Every line your coding agent writes passes through zabibu canary before it ships —
+            plain-English risk reports, five-sector damage maps, and a tamper-proof receipt proving a
+            human said yes. Run it in your terminal, or right here in the browser. No coding skills
+            required, ever.
+          </p>
+          <TerminalDemo />
+        </div>
+      </section>
+
+      <section className="card" id="install">
+        <h2>Install the CLI</h2>
+        <p className="lede">
+          The same engine, terminal-native. It watches your staged changes, gates every push, and
+          never sends a byte of your code anywhere. This is the local alternative to CodeRabbit.
+        </p>
+        <InstallTabs />
+      </section>
 
       <section className="card">
-        <h1>
-          Your AI wrote the code. But what could go wrong?
-          <span className="caret" aria-hidden="true" />
-        </h1>
-        <p className="lede">
-          Tools like ChatGPT, Claude, and Copilot — and coding agents like OpenCode, Claude Code, and
-          Cline — now write a lot of the code behind apps and websites. Most of it is fine — until it
-          quietly touches passwords, who gets in, or the pieces that keep everything running.
-          Zabibu Canary checks any change in plain English, before it goes live. No coding skills required.
-        </p>
         <h2>How it works</h2>
         <ol className="steps">
           <li className="step">
             <span className="step-num">1</span>
             <div>
-              <strong>Paste what your AI gave you.</strong>
+              <strong>Run it, or paste here.</strong>
               <br />
-              <span className="helper">Any code or changes — from an AI chat, or a coding agent like OpenCode, Claude Code, or Cline. No setup.</span>
+              <span className="helper">
+                <code className="file-path">zabibucanary review</code> in any repo — or paste what your AI
+                gave you below. No setup either way.
+              </span>
             </div>
           </li>
           <li className="step">
@@ -58,12 +83,11 @@ export default async function DashboardPage() {
       </section>
 
       <section className="card">
-        <h2>Check a change</h2>
+        <h2>Check a change — in the browser</h2>
         <NewAnalysisForm />
         <p className="helper" style={{ marginTop: 14 }}>
-          Everything stays on your own computer — no account, no cloud, nothing to install.
-          Prefer your terminal? <code className="file-path">npx zabibu-canary review</code> runs the
-          same engine locally, with a git hook that gates every push.
+          Works with anything your AI gave you — code blocks, git diffs, or notes. In the browser your
+          checks stay in this session; in the CLI they never leave your machine.
         </p>
       </section>
 
@@ -73,7 +97,8 @@ export default async function DashboardPage() {
       </section>
 
       <p className="credit">
-        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila
+        <strong>zabibu canary</strong> — a Zabibu Technika product · built by Tehillah Kachila ·{" "}
+        <span className="term-green">MIT licensed</span>
       </p>
     </main>
   );
