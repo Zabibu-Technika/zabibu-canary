@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test \"src/lib/server/analyze.test.ts\" \"src/lib/server/ledger.test.ts\" \"src/lib/server/impact.test.ts\""
+    "test": "node --test \"src/lib/server/analyze.test.ts\" \"src/lib/server/ledger.test.ts\" \"src/lib/server/impact.test.ts\" \"src/lib/server/store.test.ts\""
   },
   "overrides": {
     "postcss": "^8.5.23"

@@ -1,8 +1,8 @@
 // Dual-database store: local SQLite (dev) or Supabase REST (prod), selected by env.
 import { randomUUID } from "node:crypto";
-import { getDb } from "./db";
-import { signApproval, verifyChain, LEDGER_SEED, type ApprovalPayload } from "./ledger";
-import type { AnalysisResult, Finding } from "./analyze";
+import { getDb } from "./db.ts";
+import { signApproval, verifyChain, LEDGER_SEED, type ApprovalPayload } from "./ledger.ts";
+import type { AnalysisResult, Finding } from "./analyze.ts";
 
 export interface Analysis {
   id: string;
@@ -328,13 +328,28 @@ function fromRow(r: Record<string, unknown>): Analysis {
 let sqlite: SqliteStore | null = null;
 let supabase: SupabaseRestStore | null = null;
 
-export function getStore(): Store {
-  const url = process.env.DATABASE_URL ?? "file:./data/groundtruth.db";
-  if (url.startsWith("file:")) return (sqlite ??= new SqliteStore());
-  if (process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY)) {
-    return (supabase ??= new SupabaseRestStore());
-  }
+export type StoreKind = "sqlite" | "supabase";
+
+export interface StoreEnv {
+  [key: string]: string | undefined;
+  DATABASE_URL?: string;
+  SUPABASE_URL?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
+  SUPABASE_ANON_KEY?: string;
+}
+
+// Supabase (production) wins when configured; local SQLite is the dev default.
+export function selectStoreKind(env: StoreEnv): StoreKind {
+  if (env.SUPABASE_URL && (env.SUPABASE_SERVICE_ROLE_KEY ?? env.SUPABASE_ANON_KEY)) return "supabase";
+  const url = env.DATABASE_URL ?? "file:./data/groundtruth.db";
+  if (url.startsWith("file:")) return "sqlite";
   throw new Error(
     "No database configured. Set DATABASE_URL=file:./data/groundtruth.db (dev) or SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY (prod).",
   );
+}
+
+export function getStore(): Store {
+  return selectStoreKind(process.env) === "supabase"
+    ? (supabase ??= new SupabaseRestStore())
+    : (sqlite ??= new SqliteStore());
 }
