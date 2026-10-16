@@ -91,6 +91,7 @@ npm publish --workspace cli                  # the zabibucanary CLI`}</pre>
       <h2>Security checklist for production</h2>
       <ul className="docs-list">
         <li>Real Ed25519 keys in <code className="file-path">ZABIBU_SIGNING_KEY</code> / <code className="file-path">ZABIBU_VERIFY_KEY</code> — the private key is the ledger&apos;s root of trust, so keep it out of the repo and rotate it on exposure</li>
+        <li><code className="file-path">TOKEN_SECRET</code> and <code className="file-path">INDEXNOW_SECRET</code> set to real random values — without the first, demo tokens fall back to a default published in this repo and become forgeable; without the second, anyone can make your deployment ping IndexNow</li>
         <li><code className="file-path">.env</code> never committed — <code className="file-path">.gitignore</code> covers it</li>
         <li>Sign your commits (<code className="file-path">git config user.signingkey</code>)</li>
         <li>Rotate any key that was ever committed — the engine flags them for a reason</li>

@@ -125,6 +125,11 @@ export default async function DashboardPage() {
       {/* ── 7 · Recent checks ───────────────────────────────────────────── */}
       <section>
         <h2>Your recent checks</h2>
+        <p className="helper" style={{ marginBottom: 8 }}>
+          Checks run here are held on the server instance that handled them. The public demo keeps no
+          durable history, so this list can come back empty — the CLI&apos;s ledger is the one that
+          persists.
+        </p>
         <AnalysisTable analyses={analyses} />
       </section>
 

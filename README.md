@@ -111,17 +111,23 @@ supabase/          production schema (RLS enabled)
 
 ## Security model
 
-- All API input validated with Zod; secret values are flagged, never stored.
+- All API input validated with Zod; matched credential shapes are redacted before storage. Redaction
+  only covers the shapes the detector knows, so it is a safety net, not a guarantee — do not paste
+  production secrets into the public demo.
 - `.env` is git-ignored; `.env.example` carries placeholders only.
 - Commits and tags should be signed (see `git config user.signingkey`) before public release.
 
 ## Deploy
 
-Production target: **Vercel** (Git integration on `main`; `npx vercel --prod` as a fallback).
+Production target: **Vercel**. Git auto-deploy on `main` is disconnected after the org transfer, so
+deploys currently go out with `npx vercel --prod`; reconnecting Git in the dashboard is the follow-up.
 Repo: **github.com/Zabibu-Technika/zabibu-canary** (public).
-Set `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` in Vercel env for persistent storage, and
-`ZABIBU_SIGNING_KEY` + `ZABIBU_VERIFY_KEY` (Ed25519 PEMs) so web receipts verify across restarts
-instead of being signed with an ephemeral key.
+Set `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` in Vercel env for persistent storage — without them
+the app falls back to SQLite on one serverless instance, so history and the ledger chain do not
+survive it. Set `ZABIBU_SIGNING_KEY` + `ZABIBU_VERIFY_KEY` (Ed25519 PEMs) so web receipts verify
+across restarts instead of being signed with an ephemeral key, and `TOKEN_SECRET` +
+`INDEXNOW_SECRET` so demo tokens are not signed with the default published in `.env.example` and the
+IndexNow endpoint is not open to anyone.
 
 ## License
 
