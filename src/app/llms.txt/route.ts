@@ -34,7 +34,7 @@ export function GET(): Response {
 
 ${SITE.description}
 
-A ${SITE.org.name} product, built by ${SITE.author.name}. MIT licensed. Source: ${SITE.repo}
+MIT licensed. Source: ${SITE.repo}
 
 ## Quick facts
 - Name: ${SITE.name} (lowercase: "${SITE.wordmark}")
