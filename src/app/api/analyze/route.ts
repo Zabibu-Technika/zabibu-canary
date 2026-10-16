@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeContent, DEMO_DIFF } from "zabibucanary-engine";
+import { analyzeContent, DEMO_DIFF, redactSecrets } from "zabibucanary-engine";
 import { getStore } from "@/lib/server/store";
 import { seal } from "@/lib/server/token";
 import { revalidatePath } from "next/cache";
@@ -31,9 +31,15 @@ export async function POST(req: NextRequest) {
   const repo = parsed.data.source?.trim() || "Pasted from your AI";
   const result = analyzeContent(content);
 
+  // Analyse the original, but persist and tokenise a redacted copy, so a pasted
+  // credential never lands in the database or in the report URL. Redaction is a
+  // safety net over known credential shapes, not a guarantee — hence the warning
+  // in the docs telling people not to paste production secrets here.
+  const storedDiff = redactSecrets(content);
+
   let redirect = "";
   try {
-    const analysis = await getStore().saveAnalysis({ repo, sourceKind: parsed.data.mode, diff: content, ...result });
+    const analysis = await getStore().saveAnalysis({ repo, sourceKind: parsed.data.mode, diff: storedDiff, ...result });
     const token = seal({
       id: analysis.id,
       repo: analysis.repo,
@@ -56,7 +62,7 @@ export async function POST(req: NextRequest) {
       id: crypto.randomUUID(),
       repo,
       sourceKind: parsed.data.mode,
-      diff: content,
+      diff: storedDiff,
       riskScore: result.riskScore,
       grade: result.grade,
       filesChanged: result.filesChanged,

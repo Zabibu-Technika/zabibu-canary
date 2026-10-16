@@ -53,7 +53,7 @@ export default function DocsWeb() {
       <ul className="docs-list">
         <li><strong>Public demo</strong> — report pages render from a signed URL token, so they work on every server instance. Approvals made on a token-rendered page live in your browser&apos;s local storage.</li>
         <li><strong>Self-hosted with a database</strong> — everything persists: local SQLite for development, Supabase Postgres for production (RLS enabled).</li>
-        <li><strong>Either way</strong> — the text you paste is stored, secrets included: they are flagged in the report but not stripped from the copy. Don&apos;t paste production secrets into the public demo. API input is schema-validated.</li>
+        <li><strong>Either way</strong> — the text you paste is stored, with matched credential shapes redacted first. That is a safety net, not a guarantee: the detector only knows the shapes it knows. Don&apos;t paste production secrets into the public demo. API input is schema-validated.</li>
       </ul>
 
       <h2>Keyboard &amp; accessibility</h2>

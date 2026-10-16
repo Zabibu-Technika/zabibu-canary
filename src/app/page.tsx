@@ -115,7 +115,8 @@ export default async function DashboardPage() {
         <NewAnalysisForm />
         <p className="helper" style={{ marginTop: 14 }}>
           Works with anything your AI gave you — code blocks, git diffs, or notes. The browser demo
-          stores what you paste; the CLI never sends it anywhere. Use the CLI for anything sensitive.
+          stores what you paste (matched credential shapes are redacted first); the CLI never sends it
+          anywhere. Use the CLI for anything sensitive.
         </p>
       </section>
 

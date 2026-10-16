@@ -45,6 +45,31 @@ const SECRET_PATTERNS: RegExp[] = [
   /\bAKIA[0-9A-Z]{16}\b/,
 ];
 
+// Redaction for anything we persist or encode into a URL.
+//
+// Analysis always sees the original text; this runs on the copy we store and put
+// into report links. It keeps the key name so the rendered diff still reads like
+// code, and hides only the value.
+//
+// Read the limit honestly: it covers the shapes above and nothing else. A secret
+// the detector does not recognise was never matched, so it is not redacted. This
+// is a safety net, not a guarantee, and the docs say exactly that.
+export const REDACTED = "[redacted]";
+
+function redactMatch(match: string): string {
+  const assignment = match.match(/^([A-Za-z0-9_]+\s*[:=]\s*)([\s\S]*)$/);
+  return assignment ? `${assignment[1]}${REDACTED}` : REDACTED;
+}
+
+export function redactSecrets(content: string): string {
+  let out = content;
+  for (const pattern of SECRET_PATTERNS) {
+    const global = new RegExp(pattern.source, `${pattern.flags.replace(/g/g, "")}g`);
+    out = out.replace(global, redactMatch);
+  }
+  return out;
+}
+
 // Plain-text mode detectors — patterns that matter to non-developers pasting
 // raw AI output (ChatGPT/Claude code blocks, notes, anything).
 const DANGER_PATTERNS: { pattern: RegExp; severity: Severity; category: string; title: string; detail: string }[] = [

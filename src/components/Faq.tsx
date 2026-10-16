@@ -18,10 +18,11 @@ export const FAQ_ITEMS: FaqItem[] = [
         </p>
         <p>
           The web app is a different deal, and it is worth being exact about. What you paste is sent
-          to the server, stored alongside the report, and — unless you self-host with your own
-          database — encoded into the report&apos;s URL so the page can render without one. Matched
-          secrets are flagged in the report, but the text you pasted is kept as-is. So do not paste
-          production secrets into the public demo: use the CLI, or self-host.
+          to the server, and a copy of it is stored with the report and encoded into the report&apos;s
+          URL so the page can render without a database. Matched credential shapes are redacted from
+          that copy before it is written. But read the limit honestly: redaction covers the shapes the
+          detector knows and nothing else, so treat it as a safety net rather than a guarantee. For
+          anything genuinely sensitive, use the CLI, or self-host.
         </p>
       </>
     ),

@@ -1,6 +1,48 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { analyzeContent, analyzeDiff, analyzeText, gradeFor, looksLikeDiff, parseDiff } from "./analyze.ts";
+import { analyzeContent, analyzeDiff, analyzeText, gradeFor, looksLikeDiff, parseDiff, redactSecrets, REDACTED } from "./analyze.ts";
+
+test("redacts a matched credential but keeps the key name", () => {
+  const out = redactSecrets('STRIPE_SECRET_KEY = "sk_live_51H8xQ2eZvKYlo2C9mBn7PqR"');
+  assert.ok(!out.includes("sk_live_51H8xQ2eZvKYlo2C9mBn7PqR"));
+  assert.ok(out.includes("STRIPE_SECRET_KEY"));
+  assert.ok(out.includes(REDACTED));
+});
+
+test("redacts unquoted assignments, bare tokens and private-key blocks", () => {
+  assert.equal(redactSecrets("API_KEY=abcdefghijklmnopqrstuvwxyz"), `API_KEY=${REDACTED}`);
+  assert.equal(redactSecrets("token: ghp_abcdefghijklmnopqrstuvwxyz"), `token: ${REDACTED}`);
+  assert.equal(redactSecrets("AKIAIOSFODNN7EXAMPLE"), REDACTED);
+  assert.equal(redactSecrets("-----BEGIN RSA PRIVATE KEY-----"), REDACTED);
+});
+
+test("redacts every occurrence, not just the first", () => {
+  const out = redactSecrets('a_secret = "1111111111"\nb_secret = "2222222222"');
+  assert.ok(!out.includes("1111111111"));
+  assert.ok(!out.includes("2222222222"));
+});
+
+test("leaves ordinary lines alone, and never adds or removes a line", () => {
+  const plain = 'NODE_ENV = "production"\nconst port = 3000';
+  assert.equal(redactSecrets(plain), plain);
+  // Line structure has to survive: the stored diff must still line up with the
+  // findings that reference it.
+  assert.equal(redactSecrets('x_secret = "aaaaaaaaaaaa"\nplain').split("\n").length, 2);
+});
+
+test("redaction is idempotent", () => {
+  const once = redactSecrets(riskyDiff);
+  assert.equal(redactSecrets(once), once);
+});
+
+test("a redacted diff no longer trips the secret detector — so the analysis must run on the original", () => {
+  const redacted = redactSecrets(riskyDiff);
+  assert.ok(!redacted.includes("sk_live_51H8xQ2eZvKYlo2C9mBn7PqR"));
+  // The route therefore analyses `content` and stores `redactSecrets(content)`.
+  // If it analysed the redacted copy, the secret finding would silently vanish.
+  assert.ok(analyzeContent(riskyDiff).findings.some((f) => f.category === "secrets"));
+  assert.ok(!analyzeContent(redacted).findings.some((f) => f.title.includes("hardcoded secret")));
+});
 
 const riskyDiff = `diff --git a/.env b/.env
 new file mode 100644
