@@ -76,7 +76,7 @@ export function ApprovePanel({
     <div>
       <h2>Your approval receipt</h2>
       <p className="lede">
-        Approving creates a tamper-proof record that a real person reviewed and approved these changes.
+        Approving creates a signed, independently verifiable record that a real person reviewed and approved these changes.
         If anyone edits them afterwards, the receipt breaks — so it holds up when someone asks,
         &ldquo;who approved this?&rdquo;
       </p>

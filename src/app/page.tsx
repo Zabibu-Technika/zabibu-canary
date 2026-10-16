@@ -36,16 +36,23 @@ export default async function DashboardPage() {
             <span className="term-prompt">$</span>./canary --who
           </p>
           <h1 className="glow">
-            Your AI never sleeps.
+            The canary warns you.
             <br />
-            Neither does the blast radius.<span className="caret" aria-hidden="true" />
+            The ledger proves you listened.<span className="caret" aria-hidden="true" />
           </h1>
           <p className="lede">
-            Every line your coding agent writes passes through zabibu canary before it ships —
-            plain-English risk reports, five-sector damage maps, and a tamper-proof receipt proving a
-            human said yes. Run it in your terminal, or right here in the browser. No coding skills
-            required, ever.
+            Every line your coding agent writes passes through zabibu canary before it ships. You get a
+            plain-English report, a five-sector damage map, and a signed receipt that a human reviewed
+            it — one anybody can verify from your public key, without trusting your machine or ours.
+            Run it in your terminal, or right here in the browser. No coding skills required, ever.
           </p>
+          <blockquote className="summary-chunk">
+            <p>
+              <strong>zabibu canary</strong> is a local-first pre-push gate for AI-made code changes.
+              It reviews a diff in plain English across five damage sectors, then records a human
+              approval as an Ed25519-signed receipt that anyone can verify from the public key alone.
+            </p>
+          </blockquote>
           <TerminalDemo />
         </div>
       </section>
@@ -84,7 +91,7 @@ export default async function DashboardPage() {
             <div>
               <strong>Approve with one click.</strong>
               <br />
-              <span className="helper">You get a tamper-proof receipt proving a real person said yes before this went live.</span>
+              <span className="helper">You get a signed receipt proving a real person reviewed it before it went live — plus a bundle anyone can verify against your public key, on their own machine.</span>
             </div>
           </li>
         </ol>
@@ -107,8 +114,8 @@ export default async function DashboardPage() {
         <h2>Check a change — in the browser</h2>
         <NewAnalysisForm />
         <p className="helper" style={{ marginTop: 14 }}>
-          Works with anything your AI gave you — code blocks, git diffs, or notes. In the browser your
-          checks stay in this session; in the CLI they never leave your machine.
+          Works with anything your AI gave you — code blocks, git diffs, or notes. The browser demo
+          stores what you paste; the CLI never sends it anywhere. Use the CLI for anything sensitive.
         </p>
       </section>
 
@@ -145,7 +152,7 @@ export default async function DashboardPage() {
           <CanaryLogo size={30} />
           <div>
             <strong>zabibu canary</strong>
-            <span className="helper">the safety check for AI-made changes</span>
+            <span className="helper">the early-warning system for AI-made changes</span>
           </div>
         </div>
         <nav className="footer-links" aria-label="Footer">

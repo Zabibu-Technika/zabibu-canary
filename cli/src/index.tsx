@@ -10,6 +10,7 @@ import { readLedger } from "./lib/ledger-file.ts";
 import { ReviewApp, type ReviewState } from "./ui/ReviewApp.tsx";
 import { githubReport, jsonReport, textReport } from "./ui/text.ts";
 import { hookCommand } from "./commands/hook.ts";
+import { ledgerCommand } from "./commands/ledger.ts";
 
 const HELP = `
   [ zabibu canary ] — local code review for AI-made changes
@@ -25,6 +26,9 @@ const HELP = `
     zabibucanary demo               run the bundled example review
     zabibucanary hook install       install the pre-push gate in this repo
     zabibucanary hook remove        remove the gate
+    zabibucanary ledger             show the local approval ledger
+    zabibucanary ledger export      write a portable proof bundle (JSON on stdout)
+    zabibucanary ledger verify <f>  check a bundle using only the bundle
     zabibu --version
 
   exit codes: 0 = clean or approved · 1 = critical findings without a signed approval
@@ -149,6 +153,11 @@ async function main(): Promise<void> {
   if (command === "hook") {
     const action = positionals[1] === "remove" ? "remove" : "install";
     hookCommand(action);
+    return;
+  }
+
+  if (command === "ledger") {
+    ledgerCommand(positionals[1], positionals[2]);
     return;
   }
 

@@ -2,7 +2,7 @@
 // annotations for CI, and JSON for tooling.
 import { sectorImpacts, verdictFor, type AnalysisResult } from "zabibucanary-engine";
 
-const C = {
+export const C = {
   reset: "\u001b[0m",
   gray: "\u001b[90m",
   green: "\u001b[32m",

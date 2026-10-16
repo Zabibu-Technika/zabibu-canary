@@ -10,12 +10,20 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "privacy",
     q: "Is my code sent anywhere?",
     a: (
-      <p>
-        No. The CLI runs entirely on your machine — no accounts, no telemetry, no phone-home. It
-        reads your diff, matches patterns locally, and prints a report. If you use the web app, what
-        you paste is analyzed by the engine on the server, and matched secret values are flagged but
-        never stored.
-      </p>
+      <>
+        <p>
+          With the CLI, nothing leaves your machine at all. There is no account, no telemetry and no
+          networking code in the package — the whole review runs locally, which is rather the point.
+          Point it at anything.
+        </p>
+        <p>
+          The web app is a different deal, and it is worth being exact about. What you paste is sent
+          to the server, stored alongside the report, and — unless you self-host with your own
+          database — encoded into the report&apos;s URL so the page can render without one. Matched
+          secrets are flagged in the report, but the text you pasted is kept as-is. So do not paste
+          production secrets into the public demo: use the CLI, or self-host.
+        </p>
+      </>
     ),
   },
   {
@@ -25,8 +33,8 @@ export const FAQ_ITEMS: FaqItem[] = [
       <p>
         No. The engine is deterministic rules — no model calls in the core path, so it is
         reproducible, offline-capable, and free to run. Two people reviewing the same diff get the
-        same report, and nothing leaves the machine. The explanations are written in plain English
-        by the tool itself, so a model is never required to understand a finding.
+        same report, and on the CLI nothing leaves the machine. The explanations are written in plain
+        English by the tool itself, so a model is never required to understand a finding.
       </p>
     ),
   },
@@ -58,11 +66,12 @@ export const FAQ_ITEMS: FaqItem[] = [
     q: "How is this different from CodeRabbit or Copilot code review?",
     a: (
       <p>
-        Those tools review a pull request in the cloud, after the code has already left your
-        machine. Canary reviews <em>before</em> the code leaves — a pre-push gate in your terminal,
-        local-first and offline-capable — and it reports in plain English across five damage sectors
-        with signed approval receipts. It is a complement, not a replacement: use it as the local
-        gate, keep cloud review for the PR.
+        They are cloud reviewers with full-repo context, and CodeRabbit also ships a CLI that reviews
+        local changes before you push. Canary&apos;s difference is the gate itself: it runs entirely
+        offline with no account and no API key, its report is the same every time because it is rules
+        rather than a language model, and it records a signed approval you can verify later. It is a
+        complement, not a replacement — gate locally with Canary, keep cloud review for the pull
+        request.
       </p>
     ),
   },
@@ -75,6 +84,35 @@ export const FAQ_ITEMS: FaqItem[] = [
         That is the whole point — the tool raises the question, a person decides. If a finding is
         genuinely a false positive, approving it is fast, and the approval is itself the audit
         trail. Every finding carries an explanation of exactly why it fired.
+      </p>
+    ),
+  },
+  {
+    id: "verify",
+    q: "Can somebody else verify my receipts without trusting my machine?",
+    a: (
+      <p>
+        Yes — that is the design. Each approval is an Ed25519 signature made with a private key that
+        never leaves the machine, so a verifier needs only the public key.{" "}
+        <code className="file-path">zabibucanary ledger export</code> writes a self-contained bundle
+        and <code className="file-path">zabibucanary ledger verify &lt;file&gt;</code> checks it
+        anywhere, with no access to you, your repo, or this tool. To be exact about the limit: a
+        signature proves an approval was not <em>edited</em> afterwards. It cannot prove one was not
+        deleted, because whoever holds the file could rebuild it. That is why the chain head is
+        fingerprinted — worth anchoring somewhere you don&apos;t control.
+      </p>
+    ),
+  },
+  {
+    id: "compliance",
+    q: "Is this enough for our auditors, or for a framework like SOC 2?",
+    a: (
+      <p>
+        It produces independently verifiable evidence of who approved which change, and when — one
+        honest input into change-management evidence. It is not a certification, and we won&apos;t
+        claim it satisfies any specific framework. If a control says &quot;changes are reviewed and
+        approved,&quot; a signed, exportable record is the kind of artifact an auditor asks to see.
+        Anything past that is a conversation with your auditor, not a checkbox on our website.
       </p>
     ),
   },
@@ -112,7 +150,9 @@ export const FAQ_ITEMS: FaqItem[] = [
       <p>
         A canary in a coal mine was the early-warning system — the bird felt the gas before the
         miners did. Canary does the same for AI-made changes: it feels the danger early, while the
-        fix is still cheap, before it reaches production.
+        fix is still cheap. A warning is only worth something if somebody can prove they acted on
+        it, though — which is why every approval is signed and kept in a ledger you can hand to
+        someone else.
       </p>
     ),
   },

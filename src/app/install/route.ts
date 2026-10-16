@@ -1,6 +1,6 @@
 // Served at /install — the curl installer.
-// Tries the npm package first (live at public launch), falls back to a source
-// install from the GitHub repo so the command works today.
+// Tries the published npm package first, and falls back to a source install
+// from the GitHub repo if the registry is unreachable.
 
 const SCRIPT = `#!/bin/sh
 # ─────────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@ echo "  ok node $(node --version)"
 if npm install -g zabibucanary@latest >/dev/null 2>&1; then
   echo "  ok installed via npm"
 else
-  echo "  .. npm package not published yet — installing from source"
+  echo "  .. npm install failed — installing from source"
   command -v git >/dev/null 2>&1 || { echo "  x git is required for the source install"; exit 1; }
   tmp=$(mktemp -d)
   git clone --depth 1 https://github.com/Zabibu-Technika/zabibu-canary.git "$tmp/zabibu-canary" >/dev/null 2>&1

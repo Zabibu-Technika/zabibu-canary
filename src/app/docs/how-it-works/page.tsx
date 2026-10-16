@@ -55,18 +55,32 @@ export default function DocsHowItWorks() {
 
       <h2>5. Sign</h2>
       <p>
-        An approval is an HMAC-SHA256 signature over{" "}
+        An approval is an <strong>Ed25519 signature</strong> over{" "}
         <code className="file-path">analysisId | signer | signedAt</code>, chained to the previous
-        signature — starting from a fixed genesis seed. Change any record and every later signature
-        fails verification. The same construction runs in the browser app and the CLI; only the
-        storage differs.
+        signature — starting from a fixed genesis. Change any record and every later signature fails.
       </p>
-      <pre className="docs-pre">{`sig[0] = HMAC(secret, genesis | payload[0])
-sig[1] = HMAC(secret, sig[0]   | payload[1])
+      <pre className="docs-pre">{`sig[0] = Ed25519(priv, genesis | payload[0])
+sig[1] = Ed25519(priv, sig[0]   | payload[1])
 ...`}</pre>
       <p>
-        In the CLI the chain lives at <code className="file-path">~/.zabibucanary/ledger.jsonl</code>.
-        On the website it lives in the store (local SQLite in dev, Supabase in production).
+        The private key stays where the approval happened; verification needs only the public key. That
+        asymmetry is the entire point — a third party can check the record without being able to
+        produce a fake one. When signer and verifier share a secret, anyone who can verify can also
+        forge, and the whole chain can be regenerated from scratch. (An earlier version of Canary did
+        exactly that with HMAC. It is kept in this paragraph only as a warning.)
+      </p>
+      <p>
+        A signature stops <em>edits</em>, not deletion: whoever holds the ledger file can always drop
+        records and re-sign the remainder with the same key. So the head of the chain is fingerprinted,
+        and the fingerprint is meant to be anchored somewhere you don&apos;t control — a signed commit,
+        OpenTimestamps, a public log. Anchoring is the step that makes a wholesale rewrite detectable,
+        and no amount of self-checking can replace it.
+      </p>
+      <p>
+        In the CLI the chain lives at <code className="file-path">~/.zabibucanary/ledger.jsonl</code>{" "}
+        and the key at <code className="file-path">~/.zabibucanary/approver.key</code>. Export a
+        portable proof with <code className="file-path">zabibucanary ledger export</code>, and check
+        one anywhere with <code className="file-path">zabibucanary ledger verify &lt;file&gt;</code>.
       </p>
 
       <h2>What it deliberately does not do</h2>

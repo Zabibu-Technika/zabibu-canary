@@ -20,7 +20,7 @@ zabibucanary hook install`}</pre>
       <h2>How an approval unblocks a push</h2>
       <p>
         Each review is identified by a hash of the exact diff. Approving in the TUI records an
-        HMAC-signed receipt in <code className="file-path">~/.zabibucanary/ledger.jsonl</code>. The
+        Ed25519-signed receipt in <code className="file-path">~/.zabibucanary/ledger.jsonl</code>. The
         hook reviews the same diff again, recognizes the receipt, and lets the push through. The
         gate is therefore: <em>sign it once, and it ships.</em>
       </p>

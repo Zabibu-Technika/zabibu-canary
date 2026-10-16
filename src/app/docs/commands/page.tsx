@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function DocsCommands() {
   return (
     <>
@@ -57,13 +59,24 @@ export default function DocsCommands() {
         <code className="file-path">::warning</code>) that show up inline on the PR&apos;s Files tab.
       </p>
 
+      <h2>zabibucanary ledger</h2>
+      <pre className="docs-pre">{`zabibucanary ledger                     # records, chain status, key fingerprint
+zabibucanary ledger export > proof.json # a self-contained, verifiable bundle
+zabibucanary ledger verify proof.json   # check a bundle using only the file`}</pre>
+      <p>
+        An export carries the records, the public key and the chain tip, so somebody else can verify it
+        without your machine, your repo, or any trust in this tool. See{" "}
+        <Link href="/docs/how-it-works">how it works</Link> for the one thing a bundle cannot prove on
+        its own.
+      </p>
+
       <h2>Environment</h2>
       <table className="docs-table">
         <thead>
           <tr><th>Variable</th><th>Purpose</th></tr>
         </thead>
         <tbody>
-          <tr><td><code className="file-path">ZABIBU_SECRET</code></td><td>Overrides the HMAC secret for your local receipts (default: a dev value).</td></tr>
+          <tr><td><code className="file-path">ZABIBU_SIGNING_KEY</code></td><td>A PKCS#8 Ed25519 private key (PEM; literal <code className="file-path">\n</code> accepted). Signs receipts instead of the key auto-created at <code className="file-path">~/.zabibucanary/approver.key</code>.</td></tr>
           <tr><td><code className="file-path">CANARY_ACK=1</code></td><td>Override the gate once, for a push you have reviewed yourself.</td></tr>
         </tbody>
       </table>

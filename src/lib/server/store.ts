@@ -1,7 +1,8 @@
 // Dual-database store: local SQLite (dev) or Supabase REST (prod), selected by env.
 import { randomUUID } from "node:crypto";
 import { getDb } from "./db.ts";
-import { signApproval, verifyChain, LEDGER_SEED, type ApprovalPayload } from "zabibucanary-engine";
+import { signApproval, verifyChain, LEDGER_GENESIS, type ApprovalPayload } from "zabibucanary-engine";
+import { approverKeys } from "./signing.ts";
 import type { AnalysisResult, Finding } from "zabibucanary-engine";
 
 export interface Analysis {
@@ -46,10 +47,6 @@ interface Store {
   listAnalyses(limit?: number): Promise<Analysis[]>;
   getAnalysisDetail(id: string): Promise<AnalysisDetail | null>;
   approve(analysisId: string, signer: string): Promise<Approval>;
-}
-
-function approvalSecret(): string {
-  return process.env.APPROVAL_SECRET ?? "dev-only-secret-change-me";
 }
 
 class SqliteStore implements Store {
@@ -138,8 +135,8 @@ class SqliteStore implements Store {
     const chainValid = verifyChain(
       approvals.map((a) => ({ analysisId: a.analysisId, signer: a.signer, signedAt: a.signedAt })),
       approvals.map((a) => a.sig),
-      LEDGER_SEED,
-      approvalSecret(),
+      LEDGER_GENESIS,
+      approverKeys().publicKeyPem,
     );
     return { analysis, findings, approvals, chainValid };
   }
@@ -153,8 +150,8 @@ class SqliteStore implements Store {
     const approval: Approval = {
       id: randomUUID(),
       ...payload,
-      prevSig: last?.sig ?? LEDGER_SEED,
-      sig: signApproval(payload, last?.sig ?? LEDGER_SEED, approvalSecret()),
+      prevSig: last?.sig ?? LEDGER_GENESIS,
+      sig: signApproval(payload, last?.sig ?? LEDGER_GENESIS, approverKeys().privateKeyPem),
     };
     db.prepare(
       `INSERT INTO approvals (id, analysis_id, signer, signed_at, prev_sig, sig) VALUES (?, ?, ?, ?, ?, ?)`,
@@ -255,8 +252,8 @@ class SupabaseRestStore implements Store {
     const chainValid = verifyChain(
       approvals.map((a) => ({ analysisId: a.analysisId, signer: a.signer, signedAt: a.signedAt })),
       approvals.map((a) => a.sig),
-      LEDGER_SEED,
-      approvalSecret(),
+      LEDGER_GENESIS,
+      approverKeys().publicKeyPem,
     );
     return { analysis: fromRow(rows[0]), findings, approvals, chainValid };
   }
@@ -266,13 +263,13 @@ class SupabaseRestStore implements Store {
       headers: this.headers(),
     });
     const rows = res.ok ? ((await res.json()) as Record<string, unknown>[]) : [];
-    const prevSig = rows.length > 0 ? String(rows[0].sig) : LEDGER_SEED;
+    const prevSig = rows.length > 0 ? String(rows[0].sig) : LEDGER_GENESIS;
     const payload: ApprovalPayload = { analysisId, signer, signedAt: new Date().toISOString() };
     const approval: Approval = {
       id: randomUUID(),
       ...payload,
       prevSig,
-      sig: signApproval(payload, prevSig, approvalSecret()),
+      sig: signApproval(payload, prevSig, approverKeys().privateKeyPem),
     };
     const insert = await fetch(`${this.base()}/approvals`, {
       method: "POST",

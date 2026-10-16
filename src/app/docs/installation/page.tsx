@@ -10,7 +10,7 @@ export default function DocsInstallation() {
 
       <h2>Requirements</h2>
       <ul className="docs-list">
-        <li>Node.js 22.6 or newer (for the TypeScript runtime)</li>
+        <li>Node.js 22.6 or newer (the range these packages declare in{" "}<code className="file-path">engines</code>)</li>
         <li>git — for reviewing diffs and installing hooks</li>
         <li>No accounts, no API keys, no cloud. Everything runs locally.</li>
       </ul>
@@ -18,15 +18,15 @@ export default function DocsInstallation() {
       <h2>Option 1 — the install script</h2>
       <pre className="docs-pre">curl -fsSL https://zabibucanary.vercel.app/install | bash</pre>
       <p>
-        Tries the npm package first and falls back to a source install automatically. Prints a green
-        checkmark for every step, and shows you the three commands to try when it finishes.
+        Tries the npm package first and falls back to a source install automatically. Prints an{" "}
+        <code className="file-path">ok</code> line for each step, then the two commands to try next.
       </p>
 
       <h2>Option 2 — npm</h2>
       <pre className="docs-pre">npm install -g zabibucanary</pre>
       <p>
-        Goes live when the package is published. <code className="file-path">bun add -g zabibucanary</code>{" "}
-        works the same way.
+        Published as <code className="file-path">zabibucanary</code> on npm. The shared engine
+        installs alongside it as <code className="file-path">zabibucanary-engine</code>.
       </p>
 
       <h2>Option 3 — from source</h2>
@@ -39,8 +39,11 @@ npm link -w cli`}</pre>
       </p>
 
       <h2>Option 4 — one-off run</h2>
-      <pre className="docs-pre">npx tsx https://raw.githubusercontent.com/Zabibu-Technika/zabibu-canary/main/cli/src/index.tsx demo</pre>
-      <p>Nothing installed; handy for trying it in CI or a scratch environment.</p>
+      <pre className="docs-pre">npx --yes zabibucanary demo</pre>
+      <p>
+        Runs the published package without a global install — handy for trying it in CI or a scratch
+        environment.
+      </p>
 
       <h2>Verify the install</h2>
       <pre className="docs-pre">{`$ zabibucanary --version

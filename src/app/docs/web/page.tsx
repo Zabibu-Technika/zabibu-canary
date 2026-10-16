@@ -31,7 +31,7 @@ export default function DocsWeb() {
           <div>
             <strong>Sign the receipt.</strong>
             <br />
-            <span className="helper">Enter your name and approve. The approval is HMAC-signed and hash-chained, exactly like the CLI&apos;s.</span>
+            <span className="helper">Enter your name and approve. The approval is Ed25519-signed and hash-chained, exactly like the CLI&apos;s — though here the key belongs to the deployment, not to you. The CLI is where the key is genuinely yours.</span>
           </div>
         </li>
       </ol>
@@ -51,9 +51,9 @@ export default function DocsWeb() {
 
       <h2>Storage, honestly explained</h2>
       <ul className="docs-list">
-        <li><strong>Public demo</strong> — report pages render statelessly from a signed URL token, so they work on every server. Approvals made on a token-rendered page are kept in <em>your browser</em> and labeled as such.</li>
+        <li><strong>Public demo</strong> — report pages render from a signed URL token, so they work on every server instance. Approvals made on a token-rendered page live in your browser&apos;s local storage.</li>
         <li><strong>Self-hosted with a database</strong> — everything persists: local SQLite for development, Supabase Postgres for production (RLS enabled).</li>
-        <li><strong>Either way</strong> — matched secret values are flagged, never stored. API input is schema-validated.</li>
+        <li><strong>Either way</strong> — the text you paste is stored, secrets included: they are flagged in the report but not stripped from the copy. Don&apos;t paste production secrets into the public demo. API input is schema-validated.</li>
       </ul>
 
       <h2>Keyboard &amp; accessibility</h2>

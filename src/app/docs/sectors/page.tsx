@@ -4,7 +4,7 @@ const DETAIL: Record<string, string> = {
   security:
     "Can the wrong people get in, or can data leak out? Driven by secrets, injection, auth-surface, and dangerous-code findings. This is the sector that gets people fired.",
   trust:
-    "Can people believe the data — and prove who did what? Driven by schema changes, exposed secrets, and anything that touches auditability or tenant isolation.",
+    "Can people believe the data — and prove who did what? Driven by schema changes, exposed secrets, and authorization changes.",
   usage:
     "Does the app keep working for everyone using it? Driven by infrastructure changes and very large diffs — the sector that shows up as 3am pages.",
   accessibility:

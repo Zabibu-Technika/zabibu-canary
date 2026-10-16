@@ -18,7 +18,7 @@ export const DOC_INDEX: DocEntry[] = [
     title: "Overview",
     section: "Getting started",
     href: "/docs",
-    text: "what is zabibu canary safety check for ai-made changes introduced quickstart 60 second version blast radius plain english",
+    text: "what is zabibu canary early-warning system for ai-made changes introduced quickstart 60 second version five sectors plain english signed receipt ledger",
   },
   {
     id: "overview-why",
@@ -52,10 +52,10 @@ export const DOC_INDEX: DocEntry[] = [
   },
   {
     id: "install-npm",
-    title: "Install with npm or bun",
+    title: "Install with npm",
     section: "Getting started",
     href: "/docs/installation",
-    text: "npm install dash g global zabibucanary bun add package registry published",
+    text: "npm install dash g global zabibucanary package registry published npx one off",
   },
   {
     id: "install-source",
@@ -282,7 +282,7 @@ export const DOC_INDEX: DocEntry[] = [
     title: "Storage, honestly explained",
     section: "Platform",
     href: "/docs/web",
-    text: "storage honestly explained public demo stateless token browser localstorage sqlite supabase postgres rls secret never stored",
+    text: "storage honestly explained public demo stateless token browser localstorage sqlite supabase postgres rls secret stored",
   },
   {
     id: "web-a11y",

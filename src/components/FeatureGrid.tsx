@@ -4,7 +4,7 @@ const FEATURES = [
   {
     icon: Lock,
     title: "Local-first, actually",
-    body: "The CLI reviews on your machine. Your code never leaves it — and with local models, neither does the prompt.",
+    body: "The CLI reviews on your machine — no networking code in the package, and no model to call. Your code never leaves it.",
   },
   {
     icon: BookOpen,
@@ -19,7 +19,7 @@ const FEATURES = [
   {
     icon: FileSignature,
     title: "Receipts, not comments",
-    body: "Approvals are HMAC-signed and hash-chained into a tamper-evident ledger. Proof a human said yes — EU AI Act, SOC 2, SOX.",
+    body: "Approvals are Ed25519-signed and hash-chained. The private key never leaves the machine, so anyone can verify the record from the public key alone — no trust in us required.",
   },
 ];
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     default: "docs — zabibu canary",
     template: "%s — zabibu canary docs",
   },
-  description: "Documentation for zabibu canary — the safety check for AI-made changes.",
+  description: "Documentation for zabibu canary — the early-warning system for AI-made changes.",
 };
 
 export default function DocsLayout({ children }: { children: ReactNode }) {

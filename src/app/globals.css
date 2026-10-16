@@ -1,4 +1,4 @@
-/* GroundTruth design system — hand-rolled (Ponytail Rung 3: platform features over dependency chains).
+/* zabibu canary design system — hand-rolled (Ponytail Rung 3: platform features over dependency chains).
    Design language: Apple HIG-adjacent — squircles, spring physics, tabular metrics. */
 
 :root {
@@ -935,6 +935,25 @@ pre {
 
 .term-body .lede {
   max-width: 72ch;
+}
+
+/* The one paragraph a reader — or an answer engine — should be able to quote
+   verbatim. Deliberately visible: a summary you would not show a human is not
+   one worth extracting. */
+.summary-chunk {
+  max-width: 72ch;
+  margin: 18px 0 6px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent);
+  background: rgba(245, 183, 63, 0.06);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.summary-chunk p {
+  margin: 0;
 }
 
 /* Terminal text utilities */

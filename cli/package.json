@@ -1,7 +1,7 @@
 {
   "name": "zabibucanary",
   "version": "0.1.0",
-  "description": "Local-first code review for AI-made changes — the CodeRabbit alternative that runs in your terminal. A Zabibu Technika product, built by Tehillah Kachila.",
+  "description": "Local-first code review for AI-made changes — the CodeRabbit alternative that runs in your terminal, with signed approval receipts anyone can verify. A Zabibu Technika product, built by Tehillah Kachila.",
   "type": "module",
   "license": "MIT",
   "bin": {
@@ -30,11 +30,14 @@
     "static-analysis",
     "local-first",
     "code-quality",
+    "audit",
+    "provenance",
     "canary"
   ],
   "scripts": {
     "start": "tsx src/index.tsx",
-    "demo": "tsx src/index.tsx demo"
+    "demo": "tsx src/index.tsx demo",
+    "test": "node --test \"src/lib/ledger-file.test.ts\""
   },
   "dependencies": {
     "zabibucanary-engine": "^0.1.0",

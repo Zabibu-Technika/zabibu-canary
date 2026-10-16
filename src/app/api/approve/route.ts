@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
 
   const { analysisId, signer } = parsed.data;
 
-  // The record is self-contained (HMAC over analysisId + signer + time, chained
-  // to the previous signature), so signing works even when the analysis itself
-  // lives in another server instance — the demo's stateless mode.
+  // The record is self-contained (an Ed25519 signature over analysisId + signer +
+  // time, chained to the previous signature), so signing works even when the
+  // analysis itself lives in another server instance — the demo's stateless mode.
   const approval = await getStore().approve(analysisId, signer.trim());
 
   revalidatePath(`/analysis/${analysisId}`);

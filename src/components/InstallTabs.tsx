@@ -57,8 +57,8 @@ export function InstallTabs() {
         </button>
       </div>
       <p className="install-note">
-        Works in any git repository. Requires Node 22+ and git. The npm and bun commands go live at
-        public launch — the curl installer works today and falls back to a source install automatically.
+        Works in any git repository. Requires Node 22+ and git. All four routes install the same
+        CLI — the curl installer uses npm and falls back to a source install automatically.
       </p>
     </div>
   );

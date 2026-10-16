@@ -1,4 +1,4 @@
--- GroundTruth — production schema (Supabase / Postgres)
+-- zabibu canary — production schema (Supabase / Postgres)
 -- Apply with: supabase db push  (or paste into the SQL editor)
 
 create table if not exists analyses (

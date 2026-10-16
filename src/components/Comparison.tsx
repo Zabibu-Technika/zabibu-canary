@@ -1,64 +1,61 @@
-// How Canary compares, based on public feature lists (October 2026).
-const CELLS = {
-  yes: { label: "✓", tone: "yes" },
-  partial: { label: "~", tone: "partial" },
-  no: { label: "—", tone: "no" },
-} as const;
+// How Canary compares.
+//
+// Every cell is limited to something we can stand behind: what a vendor's own
+// public documentation states, or what is structurally true of the product. That
+// means we concede the cells where a competitor is stronger — CodeRabbit's CLI
+// reviews local changes before you push, and PR-Agent is genuinely self-hostable —
+// because a comparison table that marks a real competitor "no" everywhere is not
+// a comparison, it is an advert, and it would be the first thing a sceptical
+// reader checks.
+//
+// Sources: coderabbit.ai/cli and docs.coderabbit.ai/overview/ide-cli-review,
+// GitHub Copilot code review docs, github.com/The-PR-Agent/pr-agent (Apache-2.0).
+// Checked October 2026. Re-check before editing.
+type Tone = "yes" | "partial" | "no";
 
-const ROWS: { feature: string; canary: keyof typeof CELLS; others: { name: string; value: keyof typeof CELLS }[] }[] = [
+type Mark = { label: string; tone: Tone };
+
+const YES: Mark = { label: "✓", tone: "yes" };
+const PARTIAL: Mark = { label: "~", tone: "partial" };
+const NO: Mark = { label: "—", tone: "no" };
+const word = (label: string, tone: Tone): Mark => ({ label, tone });
+
+// Columns, in order: CodeRabbit CLI · GitHub Copilot code review · Qodo PR-Agent
+const ROWS: { feature: string; canary: Mark; others: Mark[] }[] = [
   {
-    feature: "Reviews on your machine — code never leaves",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "no" },
-      { name: "Copilot Review", value: "no" },
-      { name: "PR-Agent", value: "partial" },
-    ],
+    feature: "Code never leaves your machine",
+    canary: YES,
+    others: [NO, NO, PARTIAL],
   },
   {
-    feature: "Pre-push gate before code leaves the repo",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "no" },
-      { name: "Copilot Review", value: "no" },
-      { name: "PR-Agent", value: "partial" },
-    ],
+    feature: "No account, no API key, no network",
+    canary: YES,
+    others: [NO, NO, PARTIAL],
   },
   {
-    feature: "Plain-English reports non-developers can act on",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "no" },
-      { name: "Copilot Review", value: "no" },
-      { name: "PR-Agent", value: "no" },
-    ],
+    feature: "Same diff, same report every time (rules, not an LLM)",
+    canary: YES,
+    others: [NO, NO, NO],
   },
   {
-    feature: "Multi-sector damage map (5 sectors)",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "no" },
-      { name: "Copilot Review", value: "no" },
-      { name: "PR-Agent", value: "no" },
-    ],
+    feature: "Reviews local changes before you push",
+    canary: YES,
+    others: [YES, NO, PARTIAL],
   },
   {
-    feature: "Signed, tamper-evident approval receipts",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "no" },
-      { name: "Copilot Review", value: "no" },
-      { name: "PR-Agent", value: "no" },
-    ],
+    feature: "Five-sector damage map",
+    canary: YES,
+    others: [NO, NO, NO],
   },
   {
-    feature: "Free & open source (MIT)",
-    canary: "yes",
-    others: [
-      { name: "CodeRabbit", value: "partial" },
-      { name: "Copilot Review", value: "partial" },
-      { name: "PR-Agent", value: "yes" },
-    ],
+    feature: "Signed approval receipt, verifiable offline",
+    canary: YES,
+    others: [NO, NO, NO],
+  },
+  {
+    feature: "Licence",
+    canary: word("MIT", "yes"),
+    others: [word("proprietary", "no"), word("proprietary", "no"), word("Apache-2.0", "partial")],
   },
 ];
 
@@ -70,7 +67,7 @@ export function Comparison() {
           <tr>
             <th>Capability</th>
             <th className="compare-us">zabibu canary</th>
-            <th>CodeRabbit</th>
+            <th>CodeRabbit CLI</th>
             <th>Copilot Review</th>
             <th>PR-Agent</th>
           </tr>
@@ -80,11 +77,11 @@ export function Comparison() {
             <tr key={r.feature}>
               <td>{r.feature}</td>
               <td className="compare-us">
-                <span className={`compare-cell ${CELLS[r.canary].tone}`}>{CELLS[r.canary].label}</span>
+                <span className={`compare-cell ${r.canary.tone}`}>{r.canary.label}</span>
               </td>
-              {r.others.map((o) => (
-                <td key={o.name}>
-                  <span className={`compare-cell ${CELLS[o.value].tone}`}>{CELLS[o.value].label}</span>
+              {r.others.map((o, i) => (
+                <td key={i}>
+                  <span className={`compare-cell ${o.tone}`}>{o.label}</span>
                 </td>
               ))}
             </tr>
@@ -92,7 +89,12 @@ export function Comparison() {
         </tbody>
       </table>
       <p className="helper" style={{ marginTop: 10 }}>
-        Based on public feature lists, October 2026. ✓ full support · ~ partial or cloud-dependent · — not offered.
+        From each vendor&apos;s public documentation, checked October 2026. ✓ yes · ~ partial or
+        cloud-dependent · — not offered. <strong>Where they win:</strong> CodeRabbit and Copilot review
+        the whole repository with one-click fixes and deep pull-request integration, and CodeRabbit&apos;s
+        CLI reviews before you push too; PR-Agent is the only one here you can run entirely on your own
+        infrastructure. Canary is the layer underneath — the offline gate with a receipt. Use them
+        together.
       </p>
     </div>
   );

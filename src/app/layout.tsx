@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "zabibu canary — the safety check for AI-made changes",
+  title: "zabibu canary — the early-warning system for AI-made changes",
   description:
-    "Every line your coding agent writes, checked before it ships. Plain-English risk, five-sector damage maps, signed receipts. A Zabibu Technika product, built by Tehillah Kachila.",
+    "Every line your coding agent writes, reviewed before it ships. Plain-English risk, five-sector damage maps, and a signed receipt anyone can verify. A Zabibu Technika product, built by Tehillah Kachila.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

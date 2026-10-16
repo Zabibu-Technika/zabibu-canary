@@ -15,12 +15,21 @@ npm install`}</pre>
 
       <h2>2. Configure the environment</h2>
       <pre className="docs-pre">{`# .env (development)
-APPROVAL_SECRET=any-dev-secret
+TOKEN_SECRET=any-dev-secret
 DATABASE_URL=file:./data/groundtruth.db`}</pre>
       <p>
-        <code className="file-path">APPROVAL_SECRET</code> signs the receipts — set a strong value in
-        production. <code className="file-path">DATABASE_URL</code> selects the local SQLite store.
+        <code className="file-path">TOKEN_SECRET</code> signs the stateless demo tokens — symmetric on
+        purpose, because both ends are us. <code className="file-path">DATABASE_URL</code> selects the
+        local SQLite store.
       </p>
+      <p>
+        Receipts are a different matter: they are signed with an Ed25519 key, so verification needs the
+        matching public key. In the CLI that key is yours and never moves. A server deployment has no
+        such luxury — set both variables, or accept that receipts stop verifying when the process
+        restarts:
+      </p>
+      <pre className="docs-pre">{`npx vercel env add ZABIBU_SIGNING_KEY production
+npx vercel env add ZABIBU_VERIFY_KEY production`}</pre>
 
       <h2>3. Deploy to Vercel</h2>
       <pre className="docs-pre">{`npm i -g vercel
@@ -76,7 +85,7 @@ npm publish --workspace cli                  # the zabibucanary CLI`}</pre>
 
       <h2>Security checklist for production</h2>
       <ul className="docs-list">
-        <li>Strong <code className="file-path">APPROVAL_SECRET</code> (it is the ledger&apos;s root of trust)</li>
+        <li>Real Ed25519 keys in <code className="file-path">ZABIBU_SIGNING_KEY</code> / <code className="file-path">ZABIBU_VERIFY_KEY</code> — the private key is the ledger&apos;s root of trust, so keep it out of the repo and rotate it on exposure</li>
         <li><code className="file-path">.env</code> never committed — <code className="file-path">.gitignore</code> covers it</li>
         <li>Sign your commits (<code className="file-path">git config user.signingkey</code>)</li>
         <li>Rotate any key that was ever committed — the engine flags them for a reason</li>

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Zabibu Canary — the safety check for AI-made changes. A Zabibu Technika product, built by Tehillah Kachila.",
+  "description": "Zabibu Canary — the early-warning system for AI-made changes, with signed approval receipts anyone can verify. A Zabibu Technika product, built by Tehillah Kachila.",
   "workspaces": [
     "packages/*",
     "cli"
@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "test": "npm test --workspaces --if-present",
     "test:web": "node --test \"src/lib/server/store.test.ts\" \"src/lib/docs-index.test.ts\"",
-    "cli": "npm start --workspace zabibu-canary --"
+    "cli": "npm start --workspace cli --"
   },
   "overrides": {
     "postcss": "^8.5.23"

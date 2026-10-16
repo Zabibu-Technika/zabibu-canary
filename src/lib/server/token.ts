@@ -1,10 +1,16 @@
 // Stateless, tamper-proof payload tokens for the public demo. Lets a detail
 // page render on any server instance without a shared database.
 // Server-only: uses node:crypto.
+//
+// HMAC is the right tool here and the wrong one for receipts. This is a private
+// agreement between our own server and its own pages, so a shared secret costs
+// nothing and buys everything. An approval receipt is the opposite case — a
+// stranger has to be able to check it — which is why that one is Ed25519.
+// See lib/server/signing.ts.
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 function secret(): string {
-  return process.env.APPROVAL_SECRET ?? "dev-only-secret-change-me";
+  return process.env.TOKEN_SECRET ?? "dev-only-secret-change-me";
 }
 
 export function seal(payload: unknown): string {
