@@ -1,4 +1,6 @@
 import { SECTORS, SECTOR_INFO } from "zabibucanary-engine";
+import type { Metadata } from "next";
+import { routeMetadata } from "@/lib/routes";
 
 const DETAIL: Record<string, string> = {
   security:
@@ -12,6 +14,8 @@ const DETAIL: Record<string, string> = {
   dependability:
     "Can you rely on it over time — updates, crashes, and rollbacks? Driven by dependency changes, lockfile drift, and schema changes that are hard to reverse.",
 };
+
+export const metadata: Metadata = routeMetadata("/docs/sectors");
 
 export default function DocsSectors() {
   return (

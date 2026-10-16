@@ -1,4 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { routeMetadata } from "@/lib/routes";
+
+export const metadata: Metadata = routeMetadata("/docs/how-it-works");
 
 export default function DocsHowItWorks() {
   return (

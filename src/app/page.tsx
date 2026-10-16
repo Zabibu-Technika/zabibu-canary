@@ -8,6 +8,8 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { CliHelp } from "@/components/CliHelp";
 import { Comparison } from "@/components/Comparison";
 import { FaqList } from "@/components/Faq";
+import { JsonLd } from "@/components/JsonLd";
+import { faqPageSchema } from "@/lib/jsonld";
 import { CanaryLogo } from "@/components/CanaryLogo";
 import { Topbar } from "@/components/Topbar";
 import { ArrowUpRight } from "lucide-react";
@@ -133,6 +135,9 @@ export default async function DashboardPage() {
           Honest answers before you trust a tool with your code —{" "}
           <Link href="/docs/faq">all of them in the docs</Link>.
         </p>
+        {/* Same questions, same answers, in schema form — generated from the list
+            rendered below, so the markup can never describe a FAQ we don't show. */}
+        <JsonLd id="faq" data={faqPageSchema()} />
         <FaqList />
       </section>
 
@@ -141,8 +146,8 @@ export default async function DashboardPage() {
         <h2>Install the CLI</h2>
         <p className="lede">
           One command. The same engine, terminal-native — it watches your staged changes, gates
-          every push, and never sends a byte of your code anywhere. This is the local alternative to
-          CodeRabbit.
+          every push, and never sends a byte of your code anywhere. A local-first alternative to cloud
+          reviewers like CodeRabbit and Copilot code review, and a complement to both.
         </p>
         <InstallTabs />
       </section>
@@ -165,7 +170,9 @@ export default async function DashboardPage() {
           </a>
           <a href="/install">install script</a>
           <a href="#install">install the CLI</a>
+          <Link href="/alternatives">alternatives</Link>
           <Link href="/docs">docs</Link>
+          <Link href="/embed">badge &amp; embed</Link>
         </nav>
         <p className="credit">
           a{" "}

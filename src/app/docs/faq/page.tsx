@@ -1,4 +1,10 @@
 import { FaqList } from "@/components/Faq";
+import { JsonLd } from "@/components/JsonLd";
+import { faqPageSchema } from "@/lib/jsonld";
+import type { Metadata } from "next";
+import { routeMetadata } from "@/lib/routes";
+
+export const metadata: Metadata = routeMetadata("/docs/faq");
 
 export default function DocsFaq() {
   return (
@@ -9,6 +15,7 @@ export default function DocsFaq() {
         The questions people actually ask before they trust a tool with their code.
       </p>
 
+      <JsonLd id="faq" data={faqPageSchema()} />
       <FaqList />
 
       <h2>Still stuck?</h2>

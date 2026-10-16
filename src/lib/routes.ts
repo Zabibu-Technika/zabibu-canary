@@ -1,4 +1,5 @@
-import { absolute } from "./site";
+import type { Metadata } from "next";
+import { SITE, absolute } from "./site";
 
 export type PublicRoute = {
   path: string;
@@ -137,4 +138,30 @@ export const PUBLIC_ROUTES: PublicRoute[] = [
 /** Absolute URLs for every public route — used by the IndexNow payload. */
 export function publicUrls(): string[] {
   return PUBLIC_ROUTES.map((r) => absolute(r.path));
+}
+
+/**
+ * Per-page metadata derived from the same table the sitemap uses, so a page's
+ * <title>, description, canonical and OG tags can never drift from the sitemap
+ * entry an engine was given. Call it from a page: `export const metadata = routeMetadata("/docs/commands")`.
+ *
+ * `title` is marked absolute so the layout's template cannot double it up
+ * ("docs — commands · zabibu canary" and not "... · zabibu canary · zabibu canary").
+ */
+export function routeMetadata(path: string): Metadata {
+  const route = PUBLIC_ROUTES.find((r) => r.path === path);
+  if (!route) throw new Error(`routeMetadata: "${path}" is not a public route — add it to PUBLIC_ROUTES first`);
+  const title = `${route.title} · ${SITE.wordmark}`;
+  return {
+    title: { absolute: title },
+    description: route.description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      url: absolute(path),
+      siteName: SITE.name,
+      title,
+      description: route.description,
+    },
+  };
 }

@@ -10,8 +10,18 @@ import { ImpactRadar } from "@/components/ImpactRadar";
 import { ImpactBars } from "@/components/ImpactBars";
 import { ImpactGrid } from "@/components/ImpactGrid";
 import { CanaryLogo } from "@/components/CanaryLogo";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+// One person's review output, reachable only via a signed token or the database.
+// It renders for whoever holds the link, but it is not content and does not
+// belong in an index. robots.ts also disallows /analysis/ — belt and braces,
+// because a disallow alone does not stop a page being indexed if it is linked.
+export const metadata: Metadata = {
+  title: { absolute: "analysis · zabibu canary" },
+  robots: { index: false, follow: false },
+};
 
 export default async function AnalysisPage({
   params,

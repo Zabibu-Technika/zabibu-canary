@@ -1,3 +1,8 @@
+import type { Metadata } from "next";
+import { routeMetadata } from "@/lib/routes";
+
+export const metadata: Metadata = routeMetadata("/docs/deployment");
+
 export default function DocsDeployment() {
   return (
     <>

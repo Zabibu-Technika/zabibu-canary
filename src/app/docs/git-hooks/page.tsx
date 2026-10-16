@@ -1,3 +1,8 @@
+import type { Metadata } from "next";
+import { routeMetadata } from "@/lib/routes";
+
+export const metadata: Metadata = routeMetadata("/docs/git-hooks");
+
 export default function DocsGitHooks() {
   return (
     <>
