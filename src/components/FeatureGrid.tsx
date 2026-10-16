@@ -19,7 +19,7 @@ const FEATURES = [
   {
     icon: FileSignature,
     title: "Receipts, not comments",
-    body: "Approvals are Ed25519-signed and hash-chained. The private key never leaves the machine, so anyone can verify the record from the public key alone — no trust in us required.",
+    body: "Approvals are Ed25519-signed and hash-chained. In the CLI the private key never leaves your machine, so anyone can verify the record from the public key alone. In the browser the key belongs to the deployment, and its public half is published.",
   },
 ];
 

@@ -45,7 +45,7 @@ export default function DocsWeb() {
           <div>
             <strong>Sign the receipt.</strong>
             <br />
-            <span className="helper">Enter your name and approve. The approval is Ed25519-signed and hash-chained, exactly like the CLI&apos;s — though here the key belongs to the deployment, not to you. The CLI is where the key is genuinely yours.</span>
+            <span className="helper">Enter your name and approve. The approval is Ed25519-signed and hash-chained exactly like the CLI&apos;s, but two things differ here: the key belongs to the deployment rather than to you, and the public demo does not keep the chain between instances — each fresh server starts its own. The CLI, or a self-hosted copy with a database, is where the key and the chain are genuinely yours.</span>
           </div>
         </li>
       </ol>
@@ -65,8 +65,17 @@ export default function DocsWeb() {
 
       <h2>Storage, honestly explained</h2>
       <ul className="docs-list">
-        <li><strong>Public demo</strong> — report pages render from a signed URL token, so they work on every server instance. Approvals made on a token-rendered page live in your browser&apos;s local storage.</li>
-        <li><strong>Self-hosted with a database</strong> — everything persists: local SQLite for development, Supabase Postgres for production (RLS enabled).</li>
+        <li>
+          <strong>Public demo</strong> — report pages render from a signed URL token, so they work on
+          any server instance. Storage on that instance is a SQLite file, and on a serverless host the
+          file is ephemeral: treat the demo&apos;s history and its ledger chain as short-lived, because
+          they are. An approval you sign here is also kept in your browser&apos;s local storage.
+        </li>
+        <li>
+          <strong>Self-hosted with a database</strong> — this is the durable configuration, and the one
+          where the chain keeps growing instead of restarting. Local SQLite for development, Supabase
+          Postgres for production (RLS enabled).
+        </li>
         <li><strong>Either way</strong> — the text you paste is stored, with matched credential shapes redacted first. That is a safety net, not a guarantee: the detector only knows the shapes it knows. Don&apos;t paste production secrets into the public demo. API input is schema-validated.</li>
       </ul>
 
