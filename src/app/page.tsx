@@ -93,7 +93,7 @@ export default async function DashboardPage() {
             <div>
               <strong>Approve with one click.</strong>
               <br />
-              <span className="helper">You get a signed receipt proving a real person reviewed it before it went live — plus a bundle anyone can verify against your public key, on their own machine.</span>
+              <span className="helper">You get a signed receipt proving a real person reviewed it before it went live. In the CLI you can also export it as a self-contained evidence bundle that anyone can verify offline, against the published public key.</span>
             </div>
           </li>
         </ol>
