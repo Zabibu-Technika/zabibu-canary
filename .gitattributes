@@ -1,0 +1,4 @@
+# The published approver key is hashed and the fingerprint is shown to users.
+# Line-ending conversion would change those bytes, and therefore the fingerprint,
+# between clones and platforms. Treat PEM files as opaque.
+*.pem -text
